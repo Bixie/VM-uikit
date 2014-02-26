@@ -105,9 +105,6 @@ $config->set('body_config', json_encode($body_config));
 $this['asset']->addFile('css', 'css:theme.css');
 $this['asset']->addFile('css', 'css:custom.css');
 
-// add vmscript
-$this['asset']->addFile('js', 'js:vmsite.js');
-
 // add scripts
 $this['asset']->addFile('js', 'js:uikit.js');
 $this['asset']->addFile('js', 'js:social.js');
