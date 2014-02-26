@@ -99,9 +99,11 @@ class shopFunctionsF {
 	static public function getAddToCartButton ($orderable) {
 
 		if($orderable) {
-			$html = '<input type="submit" name="addtocart" class="addtocart-button" rel="nofollow" value="'.JText::_( 'COM_VIRTUEMART_CART_ADD_TO' ).'" title="'.JText::_( 'COM_VIRTUEMART_CART_ADD_TO' ).'" />';
+			$html = '<button type="submit" name="addtocart" class="addtocart-button uk-button uk-button-success uk-button-large uk-width-1-1" title="'.JText::_( 'COM_VIRTUEMART_CART_ADD_TO' ).'" >'.
+				'<i class="uk-icon-shopping-cart uk-icon-small uk-margin-right"></i>'.JText::_( 'COM_VIRTUEMART_CART_ADD_TO' ).'</button>';
 		} else {
-			$html = '<input name="addtocart" class="addtocart-button-disabled" value="'.JText::_( 'COM_VIRTUEMART_ADDTOCART_CHOOSE_VARIANT' ).'" title="'.JText::_( 'COM_VIRTUEMART_ADDTOCART_CHOOSE_VARIANT' ).'" />';
+			$html = '<button type="button" name="addtocart" class="uk-button uk-button-success uk-button-large uk-width-1-1" title="'.JText::_( 'COM_VIRTUEMART_ADDTOCART_CHOOSE_VARIANT' ).'" disabled="disabled" >'.
+			'<i class="uk-icon-shopping-cart uk-icon-small uk-margin-right"></i>'.JText::_( 'COM_VIRTUEMART_ADDTOCART_CHOOSE_VARIANT' ).'</button>';
 		}
 		return $html;
 	}
