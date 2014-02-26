@@ -8,7 +8,7 @@ $iCategory = 1;
 
 // Calculating Categories Per Row
 $categories_per_row = VmConfig::get('homepage_categories_per_row', 3);
-$category_cellwidth = 'uk-width-1-' . $categories_per_row;
+$category_cellwidth = 'uk-width-medium-1-' . $categories_per_row;
 ?>
 
 	<h4><?php echo JText::_('COM_VIRTUEMART_CATEGORIES') ?></h4>

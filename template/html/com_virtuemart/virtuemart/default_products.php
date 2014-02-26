@@ -23,7 +23,7 @@ foreach ($this->products as $type => $productList ) :
 foreach ($this->products as $type => $productList ) :
 // Calculating Products Per Row
 $products_per_row = VmConfig::get ( 'homepage_products_per_row', 3 ) ;
-$cellwidth = ' uk-width-1-'.$products_per_row;
+$cellwidth = ' uk-width-medium-1-'.$products_per_row;
 
 ?>
 
@@ -87,7 +87,7 @@ $cellwidth = ' uk-width-1-'.$products_per_row;
 						href="<?php echo JRoute::_ ( 'index.php?option=com_virtuemart&view=productdetails&virtuemart_product_id=' . $product->virtuemart_product_id . '&virtuemart_category_id=' . $product->virtuemart_category_id , FALSE); ?>" 
 						title="<?php echo $product->product_name; ?>">
 						<?php echo JText::_ ( 'COM_VIRTUEMART_PRODUCT_DETAILS' ); ?>
-						<i class="uk-icon-angle-right"></i>
+						&nbsp;<i class="uk-icon-angle-right"></i>
 					</a>
 				</div>
 			</li>
