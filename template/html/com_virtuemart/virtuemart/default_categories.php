@@ -13,7 +13,7 @@ $category_cellwidth = 'uk-width-1-' . $categories_per_row;
 
 	<h4><?php echo JText::_('COM_VIRTUEMART_CATEGORIES') ?></h4>
 
-	<ul class="uk-grid">
+	<ul class="uk-grid" data-uk-grid-match="{target:'.uk-panel'}" data-uk-grid-margin>
 		<?php
 		// Start the Output
 		foreach ($this->categories as $category) :
@@ -24,16 +24,16 @@ $category_cellwidth = 'uk-width-1-' . $categories_per_row;
 			// Show Category
 			?>
 			<li class="<?php echo $category_cellwidth ?>">
-				<div class="uk-panel uk-panel-box">
+				<div class="uk-panel uk-text-center">
 					<h2 class="uk-panel-title">
 						<a href="<?php echo $caturl ?>" title="<?php echo $category->category_name ?>">
 						<?php echo $category->category_name ?>
 						<br />
-				<?php
-				if (!empty($category->images)) {
-				echo $category->images[0]->displayMediaThumb("", false);
-				}
-				?>
+						<?php
+						if (!empty($category->images)) {
+							echo $category->images[0]->displayMediaThumb("", false);
+						}
+						?>
 						</a>
 					</h2>
 				</div>
