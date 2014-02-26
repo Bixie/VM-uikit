@@ -2183,7 +2183,7 @@ class VirtueMartModelProduct extends VmModel {
 		$orderByLink = '';
 		$fields = VmConfig::get ('browse_orderby_fields');
 		if (count ($fields) > 1) {
-			$orderByLink = '<div class="orderlist">';
+			$orderByLink = '<ul class="uk-nav uk-nav-dropdown">';
 			foreach ($fields as $field) {
 				if ($field != $orderby) {
 
@@ -2208,10 +2208,10 @@ class VirtueMartModelProduct extends VmModel {
 					}
 					$link = JRoute::_ ($fieldLink . $manufacturerTxt . '&orderby=' . $field,FALSE);
 
-					$orderByLink .= '<div><a title="' . $text . '" href="' . $link . '">' . $text . '</a></div>';
+					$orderByLink .= '<li><a title="' . $text . '" href="' . $link . '">' . $text . '</a></li>';
 				}
 			}
-			$orderByLink .= '</div>';
+			$orderByLink .= '</ul>';
 		}
 
 
@@ -2248,9 +2248,16 @@ class VirtueMartModelProduct extends VmModel {
 			$prefix = '';
 			// 		$orderby = $orderby;
 		}
-
-		$orderByList = '<div class="orderlistcontainer"><div class="title">' . JText::_ ('COM_VIRTUEMART_ORDERBY') . '</div><div class="activeOrder"><a title="' . $orderDirTxt . '" href="' . $link . '">' . JText::_ ('COM_VIRTUEMART_SEARCH_ORDER_' . $orderby) . ' ' . $orderDirTxt . '</a></div>';
-		$orderByList .= $orderByLink . '</div>';
+		$orderIconSfx = ($orderDir=='DESC')?'-alt':'';
+		$orderByList = '<div class="uk-button-dropdown" data-uk-dropdown>';
+		$orderByList .= 	'<a class="uk-button" title="' . $orderDirTxt . '" href="' . $link . '">';
+		$orderByList .= 		JText::_ ('COM_VIRTUEMART_SEARCH_ORDER_' . $orderby) ;
+		$orderByList .= 		'<i class="uk-icon-sort-by-alphabet' . $orderIconSfx . ' uk-margin-left"></i>';
+		$orderByList .= 	'</a>';
+		$orderByList .= 	' <div class="uk-dropdown uk-dropdown-small">';
+		$orderByList .= 	$orderByLink;
+		$orderByList .= 	'</div>';
+		$orderByList .= '</div>';
 
 		$manuList = '';
 		if (VmConfig::get ('show_manufacturers')) {
