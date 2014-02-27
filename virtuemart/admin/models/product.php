@@ -2248,11 +2248,10 @@ class VirtueMartModelProduct extends VmModel {
 			$prefix = '';
 			// 		$orderby = $orderby;
 		}
-		$orderIconSfx = ($orderDir=='DESC')?'-alt':'';
 		$orderByList = '<div class="uk-button-dropdown" data-uk-dropdown>';
 		$orderByList .= 	'<a class="uk-button" title="' . $orderDirTxt . '" href="' . $link . '">';
 		$orderByList .= 		JText::_ ('COM_VIRTUEMART_SEARCH_ORDER_' . $orderby) ;
-		$orderByList .= 		'<i class="uk-icon-sort-by-alphabet' . $orderIconSfx . ' uk-margin-left"></i>';
+		$orderByList .= 		'<i class="uk-icon-sort-alpha-' . strtolower($orderDir) . ' uk-margin-left"></i>';
 		$orderByList .= 	'</a>';
 		$orderByList .= 	' <div class="uk-dropdown uk-dropdown-small">';
 		$orderByList .= 	$orderByLink;
