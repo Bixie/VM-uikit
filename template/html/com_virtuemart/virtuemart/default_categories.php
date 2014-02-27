@@ -25,7 +25,7 @@ $category_cellwidth = 'uk-width-medium-1-' . $categories_per_row;
 			?>
 			<li class="<?php echo $category_cellwidth ?>">
 				<div class="uk-panel uk-text-center">
-					<h2 class="uk-panel-title">
+					<h3 class="uk-panel-title">
 						<a href="<?php echo $caturl ?>" title="<?php echo $category->category_name ?>">
 						<?php echo $category->category_name ?>
 						<br />
@@ -35,7 +35,7 @@ $category_cellwidth = 'uk-width-medium-1-' . $categories_per_row;
 						}
 						?>
 						</a>
-					</h2>
+					</h3>
 				</div>
 			</li>
 		<?php endforeach; ?>

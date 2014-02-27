@@ -55,7 +55,7 @@ if (VmConfig::get ('showCategory', 1) and empty($this->keyword)) {
 				?>
 				<li class="<?php echo $category_cellwidth ?>">
 					<div class="uk-panel uk-text-center">
-						<h2 class="uk-panel-title">
+						<h3 class="uk-panel-title">
 							<a href="<?php echo $caturl ?>" title="<?php echo $category->category_name ?>">
 								<?php echo $category->category_name ?>
 								<br/>
@@ -63,7 +63,7 @@ if (VmConfig::get ('showCategory', 1) and empty($this->keyword)) {
 								echo $category->images[0]->displayMediaThumb ("", FALSE);
 								//} ?>
 							</a>
-						</h2>
+						</h3>
 					</div>
 				</li>
 			<?php
