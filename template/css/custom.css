@@ -1,0 +1,39 @@
+.uk-button-primary {
+	background-color: #333333;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 1px rgba(225, 225, 225, 0);
+}
+
+.uk-button-primary:hover, .uk-button-primary:focus {
+background-color: #85A562;
+color: #fff;
+background-image: -webkit-linear-gradient(top, #85A562, #85A562);
+background-image: linear-gradient(to bottom, #85A562, #85A562);
+box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 1px rgba(225, 225, 225, 0);
+}
+
+.uk-button-success {
+background-color: #85A562;
+color: #ffffff;
+box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 1px rgba(225, 225, 225, 0);
+}
+
+.uk-button-success:hover, .uk-button-success:focus {
+background-color: #333333;
+background-image: none;
+color: #ffffff;
+box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0), 0 1px 1px rgba(225, 225, 225, 0);
+}
+
+.category-list img {
+	border-radius: 25px;
+	border: 2px dotted #85A562;
+	margin-top: 8px;
+}
+
+.uk-panel-title {
+font-size: 20px;
+line-height: 34px;
+font-weight: 300;
+text-transform: none;
+color: #1f1f21;
+}
