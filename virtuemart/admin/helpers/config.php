@@ -1388,10 +1388,12 @@ class vmJsApi{
 			}
 			// if (!$isSite) $document->addScript('//ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js');
 		} else {
-			vmJsApi::js( 'jquery','media/widgetkit/js','',false);
 			//$document->addScript(JURI::root(true).'/components/com_virtuemart/assets/js/jquery.min.js');
 			if (!$isSite) {
+				vmJsApi::js( 'jquery',FALSE,'',TRUE);
 				vmJsApi::js ('jquery-ui', FALSE, '', TRUE);
+			} else {
+				vmJsApi::js( 'jquery','media/widgetkit/js','',false);
 			}
 			//if (!$isSite) $document->addScript(JURI::root(true).'/components/com_virtuemart/assets/js/jquery-ui.min.js');
 		}
