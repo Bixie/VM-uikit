@@ -42,7 +42,7 @@ if (VmConfig::get ('showCategory', 1) and empty($this->keyword)) {
 		$category_cellwidth = ' uk-width-1-' . $categories_per_row;
 		?>
 
-		<ul class="uk-grid" data-uk-grid-match="{target:'.uk-panel'}" data-uk-grid-margin>
+		<ul class="uk-grid category-list" data-uk-grid-match="{target:'.uk-panel'}" data-uk-grid-margin>
 
 		<?php // Start the Output
 		if (!empty($this->category->children)) {

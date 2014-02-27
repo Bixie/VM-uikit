@@ -29,7 +29,7 @@ $alert=JText::sprintf ('COM_VIRTUEMART_WRONG_AMOUNT_ADDED', $step);
 
 <div class="addtocart-area">
 
-	<form method="post" class="product js-recalculate" action="<?php echo JRoute::_ ('index.php',false); ?>">
+	<form method="post" class="product js-recalculate" action="<?php echo JRoute::_ ('index.php',false); ?>" class="uk-form">
 		<input name="quantity" type="hidden" value="<?php echo $step ?>" />
 		<?php // Product custom_fields
 		if (!empty($this->product->customfieldsCart)) {
@@ -74,7 +74,7 @@ $alert=JText::sprintf ('COM_VIRTUEMART_WRONG_AMOUNT_ADDED', $step);
 		?>
 
 		<div class="addtocart-bar">
-
+			<div class="uk-grid">
 <script type="text/javascript">
 		function check(obj) {
  		// use the modulus operator '%' to see if there is a remainder
@@ -101,27 +101,31 @@ $alert=JText::sprintf ('COM_VIRTUEMART_WRONG_AMOUNT_ADDED', $step);
 				if (!( VmConfig::get('askprice', 0) and empty($tmpPrice) ) ) {
 					?>
 					<!-- <label for="quantity<?php echo $this->product->virtuemart_product_id; ?>" class="quantity_box"><?php echo JText::_ ('COM_VIRTUEMART_CART_QUANTITY'); ?>: </label> -->
-					<span class="quantity-box">
-						<input type="text" class="quantity-input js-recalculate" name="quantity[]" onblur="check(this);"
-							   value="<?php if (isset($this->product->step_order_level) && (int)$this->product->step_order_level > 0) {
-									echo $this->product->step_order_level;
-								} else if(!empty($this->product->min_order_level)){
-									echo $this->product->min_order_level;
-								}else {
-									echo '1';
-								} ?>"/>
-					</span>
-					<span class="quantity-controls js-recalculate">
-					<input type="button" class="quantity-controls quantity-plus"/>
-					<input type="button" class="quantity-controls quantity-minus"/>
-					</span>
-					<?php // Display the quantity box END
+					<div class="uk-width-medium-1-2">
+						<div class="uk-clearfix">
+							<div class="uk-float-left quantity-box">
+								<input type="text" class="quantity-input js-recalculate uk-form-width-small uk-form-large uk-text-right" name="quantity[]" onblur="check(this);"
+									   value="<?php if (isset($this->product->step_order_level) && (int)$this->product->step_order_level > 0) {
+											echo $this->product->step_order_level;
+										} else if(!empty($this->product->min_order_level)){
+											echo $this->product->min_order_level;
+										}else {
+											echo '1';
+										} ?>"/>
+							</div>
+							<div class="uk-float-left uk-margin-left quantity-controls js-recalculate">
+								<button type="button" class="quantity-plus uk-button uk-button-mini uk-button uk-margin-remove"><i class="uk-icon-plus"></i></button><br/>
+								<button type="button" class="quantity-minus uk-button uk-button-mini uk-button"><i class="uk-icon-minus"></i></button>
+							</div>
+						</div>
+					</div>
+					<div class="uk-width-medium-1-2">
+					<?php 
 
-					// Display the add to cart button ?>
-          			<span class="addtocart-button">
-          			<?php echo shopFunctionsF::getAddToCartButton ($this->product->orderable);
-						// Display the add to cart button END  ?>
-         			 </span>
+						// Display the add to cart button ?>
+						<?php echo shopFunctionsF::getAddToCartButton ($this->product->orderable);
+							// Display the add to cart button END  ?>
+					</div>
 					<input type="hidden" class="pname" value="<?php echo htmlentities($this->product->product_name, ENT_QUOTES, 'utf-8') ?>"/>
 					<input type="hidden" name="view" value="cart"/>
 					<noscript><input type="hidden" name="task" value="add"/></noscript>
@@ -132,13 +136,11 @@ $alert=JText::sprintf ('COM_VIRTUEMART_WRONG_AMOUNT_ADDED', $step);
 			<?php
 			}
 			?>
-			<div class="clear"></div>
+			</div>
 		</div>
 		<?php
 		}
 		?>
 		<input type="hidden" name="option" value="com_virtuemart"/>
-
 	</form>
-	<div class="clear"></div>
 </div>

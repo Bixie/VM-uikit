@@ -13,7 +13,7 @@ $category_cellwidth = 'uk-width-medium-1-' . $categories_per_row;
 
 	<h4><?php echo JText::_('COM_VIRTUEMART_CATEGORIES') ?></h4>
 
-	<ul class="uk-grid" data-uk-grid-match="{target:'.uk-panel'}" data-uk-grid-margin>
+	<ul class="uk-grid category-list" data-uk-grid-match="{target:'.uk-panel'}" data-uk-grid-margin>
 		<?php
 		// Start the Output
 		foreach ($this->categories as $category) :

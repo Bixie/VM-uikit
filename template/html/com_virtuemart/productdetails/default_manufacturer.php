@@ -19,16 +19,16 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
 ?>
-<div class="manufacturer">
     <?php
     $link = JRoute::_('index.php?option=com_virtuemart&view=manufacturer&virtuemart_manufacturer_id=' . $this->product->virtuemart_manufacturer_id . '&tmpl=component', FALSE);
     $text = $this->product->mf_name;
 
     /* Avoid JavaScript on PDF Output */
     if (strtolower(JRequest::getWord('output')) == "pdf") {
-	echo JHTML::_('link', $link, $text);
+		echo JHTML::_('link', $link, $text);
     } else {
 	?>
-        <span class="bold"><?php echo JText::_('COM_VIRTUEMART_PRODUCT_DETAILS_MANUFACTURER_LBL') ?></span><a class="modal" rel="{handler: 'iframe', size: {x: 700, y: 550}}" href="<?php echo $link ?>"><?php echo $text ?></a>
-    <?PHP } ?>
-</div>
+		<a class="uk-button uk-button-small uk-margin-small-top" data-lightbox="type:iframe;width:800px;height:90%" href="<?php echo $link ?>">
+			<i class="uk-icon-info"></i>&nbsp;&nbsp;<?php echo $text ?>
+		</a><br/>
+    <?php } ?>
