@@ -710,25 +710,31 @@ class ShopFunctions {
 				if (empty($_addressList[$_i]->address_type_name)) {
 					$_addressList[$_i]->address_type_name = 0;
 				}
+				$html = '<li>';
+				$html .= '<div class="uk-grid"><div class="uk-width-3-10">';
+				$html .= '<strong>'. $_addressList[$_i]->address_type_name .'</strong>';
 
-				$_shipTo[] = '<li>' . '<a href="index.php'
-					. '?option=com_virtuemart'
-					. '&view=user'
-					. '&task=' . $task
-					. '&addrtype=ST'
-					. '&virtuemart_user_id[]=' . $_addressList[$_i]->virtuemart_user_id
+				$html .= '</div><div class="uk-width-5-10">';
+				$html .= '<span>'. $_addressList[$_i]->address_1 .', ' . $_addressList[$_i]->city .'</span>';
+				$html .= '</div><div class="uk-width-2-10">';
+				$html .= '<a href="'.JRoute::_ ('index.php?option=com_virtuemart&view=user&task=removeAddressST&virtuemart_user_id[]=' . $_addressList[$_i]->virtuemart_user_id . '&virtuemart_userinfo_id=' . $_addressList[$_i]->virtuemart_userinfo_id, $useXHTTML, $useSSL ). '" class="uk-button uk-button-mini uk-button-danger uk-float-right" title="'.JText::_('COM_VIRTUEMART_USER_DELETE_ST').'">';
+				$html .= '<i class="uk-icon-trash-o"></i></a>';
+				$html .= '<a class="uk-button uk-button-mini uk-float-right uk-margin-small-right" title="'.JText::_('COM_VIRTUEMART_USER_FORM_EDIT_SHIPTO_LBL').'" href="index.php'
+					. '?option=com_virtuemart&view=user&task=' . $task
+					. '&addrtype=ST&virtuemart_user_id[]=' . $_addressList[$_i]->virtuemart_user_id
 					. '&virtuemart_userinfo_id=' . $_addressList[$_i]->virtuemart_userinfo_id
-					. '">' . $_addressList[$_i]->address_type_name . '</a> ' ;
-
-				$_shipTo[] = '&nbsp;&nbsp;<a href="'.JRoute::_ ('index.php?option=com_virtuemart&view=user&task=removeAddressST&virtuemart_user_id[]=' . $_addressList[$_i]->virtuemart_user_id . '&virtuemart_userinfo_id=' . $_addressList[$_i]->virtuemart_userinfo_id, $useXHTTML, $useSSL ). '" class="icon_delete">'.JText::_('COM_VIRTUEMART_USER_DELETE_ST').'</a></li>';
-
+					. '"><i class="uk-icon-edit"></i></a>';
+				$html .= '</div></div>';
+				
+				$html .= '</li>';
+				$_shipTo[] = $html;
 			}
 
+			$addLink = '<a class="uk-button" href="' . JRoute::_ ('index.php?option=com_virtuemart&view=user&task=' . $task . '&new=1&addrtype=ST&virtuemart_user_id[]=' . $userModel->getId (), $useXHTTML, $useSSL) . '">
+			<i class="uk-icon-plus uk-margin-small-right"></i>';
+			$addLink .= JText::_ ('COM_VIRTUEMART_USER_FORM_ADD_SHIPTO_LBL') . '</a>';
 
-			$addLink = '<a href="' . JRoute::_ ('index.php?option=com_virtuemart&view=user&task=' . $task . '&new=1&addrtype=ST&virtuemart_user_id[]=' . $userModel->getId (), $useXHTTML, $useSSL) . '"><span class="vmicon vmicon-16-editadd"></span> ';
-			$addLink .= JText::_ ('COM_VIRTUEMART_USER_FORM_ADD_SHIPTO_LBL') . ' </a>';
-
-			return $addLink . '<ul>' . join ('', $_shipTo) . '</ul>';
+			return '<div class="uk-width-1-1 uk-text-center uk-margin-bottom">' . $addLink . '</div><ul class="uk-list uk-list-striped">' . join ('', $_shipTo) . '</ul>';
 		}
 	}
 
