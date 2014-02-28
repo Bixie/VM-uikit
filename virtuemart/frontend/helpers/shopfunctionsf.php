@@ -555,17 +555,21 @@ class shopFunctionsF {
 	 */
 	static function buildTabs ($view, $load_template = array()) {
 
-		vmJsApi::js( 'vmtabs' );
-		$html = '<div id="ui-tabs">';
-		$i = 1;
+		// vmJsApi::js( 'vmtabs' );
+		$tabContents = array();
+		$html = '<ul class="uk-tab" data-uk-tab="{connect:\'#ui-tabs\'}" >';
 		foreach( $load_template as $tab_content => $tab_title ) {
-			$html .= '<div id="tab-'.$i.'" class="tabs" title="'.JText::_( $tab_title ).'">';
-			$html .= $view->loadTemplate( $tab_content );
-			$html .= '<div class="clear"></div>
-			    </div>';
+			$html .= '<li><a href="#">'.JText::_($tab_title).'</a></li>';
+			$tab = '<li>';
+			$tab .= $view->loadTemplate( $tab_content );
+			$tab .= '</li>';
+			$tabContents[] = $tab;
 			$i++;
 		}
-		$html .= '</div>';
+		$html .= '</ul>';
+		$html .= '<ul id="ui-tabs" class="uk-switcher uk-margin">';
+		$html .= implode($tabContents);
+		$html .= '</ul>';
 		echo $html;
 	}
 
