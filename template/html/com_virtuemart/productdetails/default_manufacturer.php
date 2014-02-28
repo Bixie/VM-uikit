@@ -28,7 +28,7 @@ defined('_JEXEC') or die('Restricted access');
 		echo JHTML::_('link', $link, $text);
     } else {
 	?>
-		<a class="uk-button uk-button-small uk-margin-small-top" data-lightbox="type:iframe;width:800px;height:90%" href="<?php echo $link ?>">
+		<a class="uk-button uk-button-small uk-margin-small-top" data-lightbox="type:iframe;width:800px;height:90%" href="<?php echo $link ?>" title="<?php echo JText::_('COM_VIRTUEMART_PRODUCT_DETAILS_MANUFACTURER_LBL') ?>">
 			<i class="uk-icon-info"></i>&nbsp;&nbsp;<?php echo $text ?>
 		</a><br/>
     <?php } ?>

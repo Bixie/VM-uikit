@@ -18,57 +18,83 @@
  */
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
-// vmJsApi::js( 'fancybox/jquery.fancybox-1.3.4.pack');
-// vmJsApi::css('jquery.fancybox-1.3.4');
-$document = JFactory::getDocument ();
-$imageJS = '
-jQuery(document).ready(function() {
-	jQuery("a[rel=vm-additional-images]").fancybox({
-		"titlePosition" 	: "inside",
-		"transitionIn"	:	"elastic",
-		"transitionOut"	:	"elastic"
-	});
-	jQuery(".additional-images .product-image").click(function() {
-		jQuery(".main-image img").attr("src",this.src );
-		jQuery(".main-image img").attr("alt",this.alt );
-		jQuery(".main-image a").attr("href",this.src );
-		jQuery(".main-image a").attr("title",this.alt );
-	}); 
-});
-';
-// $document->addScriptDeclaration ($imageJS);
 
-if (!empty($this->product->images)) {
-	$image = $this->product->images[0];
-	?>
-<div class="main-image">
+// echo '<pre>';
+// print_r($this->product->images);
+// echo '</pre>';
+if (!empty($this->product->images)) :
+	$count = count($this->product->images);
+	$slidesetSettings = array(
+		'style'=>'showcase_buttons',
+		'autoplay'=>0,
+		'interval'=>5000,
+		'width'=>'auto',
+		'height'=>'400px',
+		'index'=>0,
+		'order'=>'default',
+		'buttons'=>1,
+		'slices'=>20,
+		'animated'=>'fade',
+		'caption_animation_duration'=>500,
+		'effect'=>'slide',
+		'slideset_buttons'=>1,
+		'items_per_set'=>3,
+		'slideset_effect_duration'=>300
+	);
+	$widget_id = uniqid();
+	$settings  = $slidesetSettings;
+	if ($count <= $settings['items_per_set']) $settings['slideset_buttons'] = 0;
+	if ($count == 1) $settings['buttons'] = 0;
+	$sets      = array_chunk($this->product->images, $settings['items_per_set']);
 
-	<?php
-		echo $image->displayMediaFull("",true,"rel='vm-additional-images'");
-	?>
-
-	 <div class="clear"></div>
-</div>
-<?php
-	$count_images = count ($this->product->images);
-	if ($count_images > 1) {
-		?>
-    <div class="additional-images">
-		<?php
-		for ($i = 0; $i < $count_images; $i++) {
-			$image = $this->product->images[$i];
-			?>
-            <div class="floatleft">
-	            <?php
-	                echo $image->displayMediaFull('class="product-image" style="cursor: pointer"',false,"");
-	            ?>
-            </div>
-			<?php
-		}
-		?>
-        <div class="clear"></div>
-    </div>
-	<?php
+	foreach (array_keys($sets) as $s) {
+		$nav[] = '<li><span></span></li>';
 	}
-}
-  // Showing The Additional Images END ?>
+
+	$i = 0;
+ ?>
+
+<div id="showcase-<?php echo $widget_id; ?>" class="wk-slideshow-showcasebuttons" data-widgetkit="showcase" data-options='<?php echo json_encode($settings); ?>'>
+
+	<div id="slideshow-<?php echo $widget_id; ?>" class="wk-slideshow">
+		<div class="slides-container">
+			<ul class="slides">
+				<?php foreach ($this->product->images as $key => $item) : ?>
+				<?php  
+					/* Lazy Loading */
+					// $item["content"] = ($i==$settings['index']) ? $item["content"] : $this['image']->prepareLazyload($item["content"]);
+				?>
+				<li>
+					<article class="wk-content clearfix uk-text-center">
+						<img src="<?php echo $item->file_url; ?>" alt="<?php echo $item->file_description; ?>" style="max-height:<?php echo $settings['height']; ?>;"/>
+					</article>
+				</li>
+				<?php $i=$i+1;?>
+				<?php endforeach; ?>
+			</ul>
+			<?php if ($settings['buttons']): ?><div class="next"></div><div class="prev"></div><?php endif; ?>
+		</div>
+	</div>
+
+	<div id="slideset-<?php echo $widget_id;?>" class="wk-slideset <?php if (!$settings['slideset_buttons']) echo 'no-buttons'; ?>">
+		<div>
+			<div class="sets">
+			<?php if ($settings['buttons']): ?>
+				<?php foreach ($sets as $set => $items) : ?>
+				<ul class="set">
+					<?php foreach ($items as $item) : ?>
+					<li>
+						<div><div><img src="<?php echo $item->file_url_thumb ?>" alt=""/></div></div>
+					</li>
+					<?php endforeach; ?>
+				</ul>
+				<?php endforeach; ?>
+			<?php endif; ?>
+			</div>
+			<?php if ($settings['slideset_buttons']): ?><div class="next"></div><div class="prev"></div><?php endif; ?>
+		</div>
+	</div>
+	
+</div>
+<?php endif; ?>
+

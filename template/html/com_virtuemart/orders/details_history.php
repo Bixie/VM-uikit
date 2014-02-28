@@ -20,12 +20,15 @@
 defined('_JEXEC') or die('Restricted access');
 ?>
 
-<table width="100%" cellspacing="2" cellpadding="4" border="0">
+<table width="100%" class="uk-table uk-table-atriped" cellspacing="2" cellpadding="4" border="0">
+	<thead>
 	<tr align="left" class="sectiontableheader">
 		<th align="left" ><?php echo JText::_('COM_VIRTUEMART_DATE') ?></th>
 		<th align="left" ><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_PO_STATUS') ?></th>
 		<th align="left" ><?php echo JText::_('COM_VIRTUEMART_ORDER_COMMENT') ?></th>
 	</tr>
+	</thead>
+	<tbody>
 <?php
 	foreach($this->orderdetails['history'] as $_hist) {
 		if (!$_hist->customer_notified) {
@@ -46,4 +49,5 @@ defined('_JEXEC') or die('Restricted access');
 <?php
 	}
 ?>
+	</tbody>
 </table>

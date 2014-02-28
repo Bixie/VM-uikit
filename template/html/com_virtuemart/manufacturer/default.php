@@ -19,46 +19,19 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
 
-// Category and Columns Counter
-$iColumn = 1;
-$iManufacturer = 1;
-
 // Calculating Categories Per Row
-$manufacturerPerRow = 3;
-if ($manufacturerPerRow != 1) {
-	$manufacturerCellWidth = ' width'.floor ( 100 / $manufacturerPerRow );
-} else {
-	$manufacturerCellWidth = '';
-}
+$manufacturerPerRow = VmConfig::get('manufacturer_per_row', 3);
+$manufacturerCellWidth = ' uk-width-1-'.$manufacturerPerRow;
 
-// Separator
-$verticalSeparator = " vertical-separator";
-$horizontalSeparator = '<div class="horizontal-separator"></div>';
 
 // Lets output the categories, if there are some
 if (!empty($this->manufacturers)) { ?>
 
 <div class="manufacturer-view-default">
 
+	<ul class="uk-grid manufacturer-list" data-uk-grid-match="{target:'.uk-panel'}" data-uk-grid-margin>
 	<?php // Start the Output
-	foreach ( $this->manufacturers as $manufacturer ) {
-
-		// Show the horizontal seperator
-		if ($iColumn == 1 && $iManufacturer > $manufacturerPerRow) {
-			echo $horizontalSeparator;
-		}
-
-		// this is an indicator wether a row needs to be opened or not
-		if ($iColumn == 1) { ?>
-		<div class="row">
-		<?php }
-
-		// Show the vertical seperator
-		if ($iManufacturer == $manufacturerPerRow or $iManufacturer % $manufacturerPerRow == 0) {
-			$showVerticalSeparator = ' ';
-		} else {
-			$showVerticalSeparator = $verticalSeparator;
-		}
+	foreach ($this->manufacturers as $manufacturer) :
 
 		// Manufacturer Elements
 		$manufacturerURL = JRoute::_('index.php?option=com_virtuemart&view=manufacturer&virtuemart_manufacturer_id=' . $manufacturer->virtuemart_manufacturer_id, FALSE);
@@ -66,32 +39,16 @@ if (!empty($this->manufacturers)) { ?>
 		$manufacturerImage = $manufacturer->images[0]->displayMediaThumb("",false);
 
 		// Show Category ?>
-		<div class="manufacturer floatleft<?php echo $manufacturerCellWidth . $showVerticalSeparator ?>">
-			<div class="spacer">
-				<h2>
+		<li class="<?php echo $manufacturerCellWidth ?>">
+			<div class="uk-panel uk-panel-box uk-text-center">
+				<h3 class="uk-panel-title">
+					<a title="<?php echo $manufacturer->mf_name; ?>" href="<?php echo $manufacturerURL; ?>"><?php echo $manufacturerImage;?></a><br/>
 					<a title="<?php echo $manufacturer->mf_name; ?>" href="<?php echo $manufacturerURL; ?>"><?php echo $manufacturer->mf_name; ?></a>
-				</h2>
-				<a title="<?php echo $manufacturer->mf_name; ?>" href="<?php echo $manufacturerURL; ?>"><?php echo $manufacturerImage;?></a>
+				</h3>
 			</div>
-		</div>
-		<?php
-		$iManufacturer ++;
-
-		// Do we need to close the current row now?
-		if ($iColumn == $manufacturerPerRow) {
-			echo '<div class="clear"></div></div>';
-			$iColumn = 1;
-		} else {
-			$iColumn ++;
-		}
-	}
-
-	// Do we need a final closing row tag?
-	if ($iColumn != 1) { ?>
-		<div class="clear"></div>
-	</div>
-	<?php } ?>
-
+		</li>
+	<?php endforeach; ?>
+	</ul>
 </div>
 <?php
 }

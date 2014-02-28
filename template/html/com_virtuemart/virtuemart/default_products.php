@@ -24,7 +24,6 @@ foreach ($this->products as $type => $productList ) :
 // Calculating Products Per Row
 $products_per_row = VmConfig::get ( 'homepage_products_per_row', 3 ) ;
 $cellwidth = ' uk-width-medium-1-'.$products_per_row;
-
 ?>
 
 	<li class="<?php echo $type ?>-view">
@@ -39,15 +38,16 @@ $cellwidth = ' uk-width-medium-1-'.$products_per_row;
 			<li class="product <?php echo $cellwidth?>">
 				<div class="uk-panel uk-panel-box">
 					<div class="uk-text-center">
-						<h4 class="uk-panel-title">
-						<?php // Product Name
-						echo JHTML::link ( JRoute::_ ( 'index.php?option=com_virtuemart&view=productdetails&virtuemart_product_id=' . $product->virtuemart_product_id . '&virtuemart_category_id=' . $product->virtuemart_category_id, FALSE ), $product->product_name, array ('title' => $product->product_name ) ); ?>
-						</h4>
 
-						<div class="uk-thumbnail">
+						<div class="uk-thumbnail uk-width-1-1">
 						<?php // Product Image
 						if ($product->images) {
-							echo $product->images[0]->displayMediaThumb( 'border="0"',true,'class="uk-margin-top uk-margin uk-margin-left uk-margin-right" data-lightbox="true"' );
+							?>
+							<a href="<?php echo JRoute::_ ( 'index.php?option=com_virtuemart&view=productdetails&virtuemart_product_id=' . $product->virtuemart_product_id . '&virtuemart_category_id=' . $product->virtuemart_category_id, FALSE ); ?>" class="uk-margin-top uk-margin"  data-spotlight="effect:bottom;">
+								<img src="<?php echo $product->images[0]->file_url_thumb; ?>" alt="<?php echo $product->product_name; ?>" />
+								<div class="overlay"><?php echo $product->product_name; ?></div>
+							</a>
+							<?php
 						}
 						?>
 						</div>

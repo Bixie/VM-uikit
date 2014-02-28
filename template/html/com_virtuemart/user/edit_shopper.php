@@ -21,11 +21,11 @@ defined('_JEXEC') or die('Restricted access');
 
 ?>
 <?php if(!$this->userDetails->user_is_vendor){ ?>
-<div class="buttonBar-right">
-	<button class="button" type="submit" onclick="javascript:return myValidator(userForm, 'saveUser');" ><?php echo $this->button_lbl ?></button>
-	&nbsp;
-	<button class="button" type="reset" onclick="window.location.href='<?php echo JRoute::_('index.php?option=com_virtuemart&view=user', FALSE); ?>'" ><?php echo JText::_('COM_VIRTUEMART_CANCEL'); ?></button>
-
+<div class="uk-width-1-1 uk-text-center uk-margin-bottom">
+	<button class="uk-button" type="submit" onclick="javascript:return myValidator(userForm, 'saveUser');" >
+		<i class="uk-icon-check uk-margin-small-right"></i><?php echo $this->button_lbl ?></button>
+	<button class="uk-button" type="reset" onclick="window.location.href='<?php echo JRoute::_('index.php?option=com_virtuemart&view=user', FALSE); ?>'" >
+		<i class="uk-icon-ban uk-margin-small-right"></i><?php echo JText::_('COM_VIRTUEMART_CANCEL'); ?></button>
 </div>
 <?php } ?>
 <?php if( $this->userDetails->virtuemart_user_id!=0)  {
@@ -35,10 +35,6 @@ defined('_JEXEC') or die('Restricted access');
 
 
 
-<?php if ($this->userDetails->JUser->get('id') ) {
-  echo $this->loadTemplate('address_addshipto');
-  }
-  ?>
 <?php if(!empty($this->virtuemart_userinfo_id)){
 	echo '<input type="hidden" name="virtuemart_userinfo_id" value="'.(int)$this->virtuemart_userinfo_id.'" />';
 }
@@ -46,3 +42,9 @@ defined('_JEXEC') or die('Restricted access');
 <input type="hidden" name="task" value="<?php echo $this->fTask; // I remember, we removed that, but why?   ?>" />
 <input type="hidden" name="address_type" value="BT" />
 
+<div class="uk-width-1-1 uk-text-center">
+	<button class="uk-button" type="submit" onclick="javascript:return myValidator(userForm, 'saveUser');" >
+		<i class="uk-icon-check uk-margin-small-right"></i><?php echo $this->button_lbl ?></button>
+	<button class="uk-button" type="reset" onclick="window.location.href='<?php echo JRoute::_('index.php?option=com_virtuemart&view=user', FALSE); ?>'" >
+		<i class="uk-icon-ban uk-margin-small-right"></i><?php echo JText::_('COM_VIRTUEMART_CANCEL'); ?></button>
+</div>

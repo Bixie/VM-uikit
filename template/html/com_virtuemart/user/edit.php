@@ -50,43 +50,90 @@ function myValidator(f, t)
 	return false;
 }
 </script>
-<h1><?php echo $this->page_title ?></h1>
-<?php echo shopFunctionsF::getLoginForm(false); ?>
+<div class="manufacturer-details-view">
+	<div class="uk-grid">
+		<div class="uk-width-1-1">
+			<h1><?php echo $this->page_title ?></h1>
+		</div>
+	</div>
 
-<h2><?php if($this->userDetails->virtuemart_user_id==0) {
-	echo JText::_('COM_VIRTUEMART_YOUR_ACCOUNT_REG');
-}?></h2>
-<form method="post" id="adminForm" name="userForm" action="<?php echo JRoute::_('index.php?view=user',$this->useXHTML,$this->useSSL) ?>" class="uk-form form-validate">
-<?php if($this->userDetails->user_is_vendor){ ?>
-    <div class="buttonBar-right">
-	<button class="button" type="submit" onclick="javascript:return myValidator(userForm, 'saveUser');" ><?php echo $this->button_lbl ?></button>
-	&nbsp;
-<button class="button" type="reset" onclick="window.location.href='<?php echo JRoute::_('index.php?option=com_virtuemart&view=user', FALSE); ?>'" ><?php echo JText::_('COM_VIRTUEMART_CANCEL'); ?></button></div>
-    <?php } ?>
-<?php // Loading Templates in Tabs
-if($this->userDetails->virtuemart_user_id!=0) {
-    $tabarray = array();
-    if($this->userDetails->user_is_vendor){
-	    if(!empty($this->add_product_link)) {
-		    echo $this->add_product_link;
-	    }
-	    $tabarray['vendor'] = 'COM_VIRTUEMART_VENDOR';
-    }
-    $tabarray['shopper'] = 'COM_VIRTUEMART_SHOPPER_FORM_LBL';
-    //$tabarray['user'] = 'COM_VIRTUEMART_USER_FORM_TAB_GENERALINFO';
-    if (!empty($this->shipto)) {
-	    $tabarray['shipto'] = 'COM_VIRTUEMART_USER_FORM_ADD_SHIPTO_LBL';
-    }
-    if (($_ordcnt = count($this->orderlist)) > 0) {
-	    $tabarray['orderlist'] = 'COM_VIRTUEMART_YOUR_ORDERS';
-    }
 
-    shopFunctionsF::buildTabs ( $this, $tabarray);
+	<div class="uk-grid">
+		<div class="uk-width-medium-2-3">
+		<?php
+			jimport('joomla.application.module.helper');
+			$renderer = JFactory::getDocument()->loadRenderer('module');
+			$contents = '';
+			$position = $this->userDetails->virtuemart_user_id==0?'registratie':'klantprofiel';
+			foreach (JModuleHelper::getModules($position) as $mod)  {
+				$contents .= $renderer->render($mod, array('style'=>'blank'));
+			}
+			if($this->userDetails->virtuemart_user_id==0) : ?>
+			
+			<h2><?php echo JText::_('COM_VIRTUEMART_YOUR_ACCOUNT_REG');?></h2>
+			
+			<?php echo $contents; ?>
+			
+		<?php else: ?>
+			<h2><?php echo JText::_('COM_VIRTUEMART_YOUR_ACCOUNT_REG');?></h2>
+			
+			<?php echo $contents; ?>
+			
+		<?php endif; ?>
+		</div>
+		<div class="uk-width-medium-1-3">
+			<div class="uk-panel uk-panel-box">
+			<?php echo shopFunctionsF::getLoginForm(false); ?>
+			</div>
+		</div>
+	</div>
+	<div class="uk-grid">
+		<div class="uk-width-1-1">
+			<form method="post" id="adminForm" name="userForm" action="<?php echo JRoute::_('index.php?view=user',$this->useXHTML,$this->useSSL) ?>" class="uk-form uk-form-horizontal form-validate">
+			<?php if($this->userDetails->user_is_vendor) : ?>
+				<div class="uk-width-1-1 uk-text-center uk-margin-bottom">
+					<button class="uk-button" type="submit" onclick="javascript:return myValidator(userForm, 'saveUser');" >
+						<i class="uk-icon-check uk-margin-small-right"></i><?php echo $this->button_lbl ?></button>
+					<button class="uk-button" type="reset" onclick="window.location.href='<?php echo JRoute::_('index.php?option=com_virtuemart&view=user', FALSE); ?>'" >
+						<i class="uk-icon-ban uk-margin-small-right"></i><?php echo JText::_('COM_VIRTUEMART_CANCEL'); ?></button>
+				</div>
+			<?php endif; ?>
+				<?php // Loading Templates in Tabs
+				if($this->userDetails->virtuemart_user_id!=0) {
+					$tabarray = array();
+					if($this->userDetails->user_is_vendor){
+						if(!empty($this->add_product_link)) {
+							echo $this->add_product_link;
+						}
+						$tabarray['vendor'] = 'COM_VIRTUEMART_VENDOR';
+					}
+					$tabarray['shopper'] = 'COM_VIRTUEMART_SHOPPER_FORM_LBL';
+					$tabarray['address_addshipto'] =  'COM_VIRTUEMART_USER_FORM_SHIPTOS_LBL';
+					//$tabarray['user'] = 'COM_VIRTUEMART_USER_FORM_TAB_GENERALINFO';
+					if (!empty($this->shipto)) { //????
+						$tabarray['shipto'] = 'COM_VIRTUEMART_USER_FORM_ADD_SHIPTO_LBL';
+					}
+					if (($_ordcnt = count($this->orderlist)) > 0) {
+						$tabarray['orderlist'] = 'COM_VIRTUEMART_YOUR_ORDERS';
+					}
+					shopFunctionsF::buildTabs ( $this, $tabarray);
 
- } else {
-    echo $this->loadTemplate ( 'shopper' );
- }
+				 } else {
+					echo $this->loadTemplate ( 'shopper' );
+				 }
+				?>
+			
+			
+			
+				<input type="hidden" name="option" value="com_virtuemart" />
+				<input type="hidden" name="controller" value="user" />
+				<?php echo JHTML::_( 'form.token' ); ?>
+			</form>
+		</div>
+	</div>
+</div>
 
+<?php
 /*
  * TODO this Stuff should be converted in a payment module. But the idea to show already saved payment information to the user is a good one
  * So maybe we should place here a method (joomla plugin hook) which loads all published plugins, which already used by the user and display
@@ -122,8 +169,4 @@ if($this->userDetails->virtuemart_user_id!=0) {
 
 // 	echo $this->pane->endPane();
 ?>
-<input type="hidden" name="option" value="com_virtuemart" />
-<input type="hidden" name="controller" value="user" />
-<?php echo JHTML::_( 'form.token' ); ?>
-</form>
 

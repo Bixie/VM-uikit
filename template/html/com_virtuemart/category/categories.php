@@ -42,11 +42,11 @@ if ($this->category->children ) {
 				<div class="uk-panel uk-text-center">
 					<h3 class="uk-panel-title">
 					    <a href="<?php echo $caturl ?>" title="<?php echo $category->category_name ?>">
-					    <?php echo $category->category_name ?>
-					    <br />
 					    <?php // if ($category->ids) {
 						    echo $category->images[0]->displayMediaThumb("",false);
 					    //} ?>
+					    <br />
+					    <?php echo $category->category_name ?>
 					    </a>
 				    </h3>
 			    </div>

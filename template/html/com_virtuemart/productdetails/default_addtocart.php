@@ -27,7 +27,7 @@ if($step==0)
 $alert=JText::sprintf ('COM_VIRTUEMART_WRONG_AMOUNT_ADDED', $step);
 ?>
 
-<div class="addtocart-area">
+<div class="addtocart-area uk-margin-top">
 
 	<form method="post" class="product js-recalculate" action="<?php echo JRoute::_ ('index.php',false); ?>" class="uk-form">
 		<input name="quantity" type="hidden" value="<?php echo $step ?>" />
@@ -101,10 +101,10 @@ $alert=JText::sprintf ('COM_VIRTUEMART_WRONG_AMOUNT_ADDED', $step);
 				if (!( VmConfig::get('askprice', 0) and empty($tmpPrice) ) ) {
 					?>
 					<!-- <label for="quantity<?php echo $this->product->virtuemart_product_id; ?>" class="quantity_box"><?php echo JText::_ ('COM_VIRTUEMART_CART_QUANTITY'); ?>: </label> -->
-					<div class="uk-width-medium-1-2">
+					<div class="uk-width-medium-1-3">
 						<div class="uk-clearfix">
 							<div class="uk-float-left quantity-box">
-								<input type="text" class="quantity-input js-recalculate uk-form-width-small uk-form-large uk-text-right" name="quantity[]" onblur="check(this);"
+								<input type="text" class="quantity-input js-recalculate uk-form-width-mini uk-form-large uk-text-right" name="quantity[]" onblur="check(this);"
 									   value="<?php if (isset($this->product->step_order_level) && (int)$this->product->step_order_level > 0) {
 											echo $this->product->step_order_level;
 										} else if(!empty($this->product->min_order_level)){
@@ -119,7 +119,7 @@ $alert=JText::sprintf ('COM_VIRTUEMART_WRONG_AMOUNT_ADDED', $step);
 							</div>
 						</div>
 					</div>
-					<div class="uk-width-medium-1-2">
+					<div class="uk-width-medium-2-3">
 					<?php 
 
 						// Display the add to cart button ?>

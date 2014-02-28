@@ -116,65 +116,73 @@ JHTML::_ ( 'behavior.modal' );
 
     // XXX style CSS id com-form-login ?>
     <form id="com-form-login" action="<?php echo JRoute::_('index.php', $this->useXHTML, $this->useSSL); ?>" method="post" name="com-login" >
-    <fieldset class="userdata">
-	<?php if (!$this->from_cart ) { ?>
-	<div>
-		<h2><?php echo JText::_('COM_VIRTUEMART_ORDER_CONNECT_FORM'); ?></h2>
-	</div>
-<div class="clear"></div>
-<?php } else { ?>
-        <p><?php echo JText::_('COM_VIRTUEMART_ORDER_CONNECT_FORM'); ?></p>
-<?php }   ?>
-        <p class="width30 floatleft" id="com-form-login-username">
+		<fieldset class="uk-form userdata">
+		<?php if (!$this->from_cart ) : ?>
+			<h2><?php echo JText::_('COM_VIRTUEMART_ORDER_CONNECT_FORM'); ?></h2>
+		<?php else: ?>
+			<p><?php echo JText::_('COM_VIRTUEMART_ORDER_CONNECT_FORM'); ?></p>
+		<?php endif; ?>
+	<?php if ($this->from_cart ) : ?>
+	<div class="uk-grid">
+		<div class="uk-width-1-3">
+	<?php endif; ?>
+        <div class="uk-form-row" id="com-form-login-username">
             <input type="text" name="username" class="inputbox" size="18" alt="<?php echo JText::_('COM_VIRTUEMART_USERNAME'); ?>" value="<?php echo JText::_('COM_VIRTUEMART_USERNAME'); ?>" onblur="if(this.value=='') this.value='<?php echo addslashes(JText::_('COM_VIRTUEMART_USERNAME')); ?>';" onfocus="if(this.value=='<?php echo addslashes(JText::_('COM_VIRTUEMART_USERNAME')); ?>') this.value='';" />
-	</p>
-
-        <p class="width30 floatleft" id="com-form-login-password">
+		</div>
+		<?php if ($this->from_cart ) : ?>
+			</div>
+		</div>
+		<?php endif; ?>
+		<?php if ($this->from_cart ) : ?>
+		<div class="uk-grid">
+			<div class="uk-width-1-3">
+		<?php endif; ?>
+        <div class="uk-form-row" id="com-form-login-password">
             <?php if ( JVM_VERSION===1 ) { ?>
             <input type="password" id="passwd" name="passwd" class="inputbox" size="18" alt="<?php echo JText::_('COM_VIRTUEMART_PASSWORD'); ?>" value="<?php echo JText::_('COM_VIRTUEMART_PASSWORD'); ?>" onblur="if(this.value=='') this.value='<?php echo addslashes(JText::_('COM_VIRTUEMART_PASSWORD')); ?>';" onfocus="if(this.value=='<?php echo addslashes(JText::_('COM_VIRTUEMART_PASSWORD')); ?>') this.value='';" />
             <?php } else { ?>
             <input id="modlgn-passwd" type="password" name="password" class="inputbox" size="18" alt="<?php echo JText::_('COM_VIRTUEMART_PASSWORD'); ?>" value="<?php echo JText::_('COM_VIRTUEMART_PASSWORD'); ?>" onblur="if(this.value=='') this.value='<?php echo addslashes(JText::_('COM_VIRTUEMART_PASSWORD')); ?>';" onfocus="if(this.value=='<?php echo addslashes(JText::_('COM_VIRTUEMART_PASSWORD')); ?>') this.value='';" />
             <?php } ?>
-		</p>
-
-        <p class="width30 floatleft" id="com-form-login-remember">
-            <input type="submit" name="Submit" class="default" value="<?php echo JText::_('COM_VIRTUEMART_LOGIN') ?>" />
+		</div>
+		<?php if ($this->from_cart ) : ?>
+			</div>
+		</div>
+		<?php endif; ?>
+		<?php if ($this->from_cart ) : ?>
+		<div class="uk-grid">
+			<div class="uk-width-1-3">
+		<?php endif; ?>
+        <div class="uk-form-row" id="com-form-login-remember">
             <?php if (JPluginHelper::isEnabled('system', 'remember')) : ?>
-            <label for="remember"><?php echo $remember_me = JVM_VERSION===1? JText::_('Remember me') : JText::_('JGLOBAL_REMEMBER_ME') ?></label>
-            <input type="checkbox" id="remember" name="remember" class="inputbox" value="yes" alt="Remember Me" />
+            <label for="remember" class="uk-form-label">
+            <input type="checkbox" id="remember" name="remember" class="inputbox" value="yes" alt="<?php echo $remember_me;?>" />
+            <?php echo $remember_me = JVM_VERSION===1? JText::_('Remember me') : JText::_('JGLOBAL_REMEMBER_ME') ?>
+			</label>
             <?php endif; ?>
-        </p>
+			<input type="submit" name="Submit" class="uk-button uk-button-primary uk-float-right" value="<?php echo JText::_('COM_VIRTUEMART_LOGIN') ?>" />
+
+		</div>
+		<?php if ($this->from_cart ) : ?>
+			</div>
+		</div>
+		<?php endif; ?>
+		<div class="uk-grid uk-margin-small-top">
+			<div class="uk-width-1-<?php echo $this->from_cart?2:1; ?>">
+				<a href="<?php echo JRoute::_('index.php?option='.$comUserOption.'&view=remind'); ?>" rel="nofollow">
+					<i class="uk-icon-user uk-margin-small-right"></i>
+					<?php echo JText::_('COM_VIRTUEMART_ORDER_FORGOT_YOUR_USERNAME'); ?></a>
+			</div>
+			<div class="uk-width-1-<?php echo $this->from_cart?2:1; ?>">
+				<a href="<?php echo JRoute::_('index.php?option='.$comUserOption.'&view=reset'); ?>" rel="nofollow">
+					<i class="uk-icon-key uk-margin-small-right"></i>
+					<?php echo JText::_('COM_VIRTUEMART_ORDER_FORGOT_YOUR_PASSWORD'); ?></a>
+			</div>
+		</div>
         </fieldset>
-        <div class="clr"></div>
-
-        <div class="width30 floatleft">
-            <a href="<?php echo JRoute::_('index.php?option='.$comUserOption.'&view=remind'); ?>" rel="nofollow">
-            <?php echo JText::_('COM_VIRTUEMART_ORDER_FORGOT_YOUR_USERNAME'); ?></a>
-        </div>
-        <div class="width30 floatleft">
-            <a href="<?php echo JRoute::_('index.php?option='.$comUserOption.'&view=reset'); ?>" rel="nofollow">
-            <?php echo JText::_('COM_VIRTUEMART_ORDER_FORGOT_YOUR_PASSWORD'); ?></a>
-        </div>
-
-
-
-        <?php /*
-          $usersConfig = &JComponentHelper::getParams( 'com_users' );
-          if ($usersConfig->get('allowUserRegistration')) { ?>
-          <div class="width30 floatleft">
-          <a  class="details" href="<?php echo JRoute::_( 'index.php?option=com_virtuemart&view=user' ); ?>">
-          <?php echo JText::_('COM_VIRTUEMART_ORDER_REGISTER'); ?></a>
-          </div>
-          <?php }
-         */ ?>
-
-        <div class="clr"></div>
-
-
         <?php if ( JVM_VERSION===1 ) { ?>
         <input type="hidden" name="task" value="login" />
         <?php } else { ?>
-	<input type="hidden" name="task" value="user.login" />
+		<input type="hidden" name="task" value="user.login" />
         <?php } ?>
         <input type="hidden" name="option" value="<?php echo $comUserOption ?>" />
         <input type="hidden" name="return" value="<?php echo base64_encode($url) ?>" />
@@ -183,9 +191,11 @@ JHTML::_ ( 'behavior.modal' );
 
 <?php  } else if ( $user->id ) { ?>
 
-   <form action="<?php echo JRoute::_('index.php'); ?>" method="post" name="login" id="form-login">
-        <?php echo JText::sprintf( 'COM_VIRTUEMART_HINAME', $user->name ); ?>
-	<input type="submit" name="Submit" class="button" value="<?php echo JText::_( 'COM_VIRTUEMART_BUTTON_LOGOUT'); ?>" />
+   <form action="<?php echo JRoute::_('index.php'); ?>" method="post" name="login" id="form-login" class="uk-form">
+   
+        <h5><?php echo JText::sprintf( 'COM_VIRTUEMART_HINAME', $user->name ); ?></h5>
+		
+		<input type="submit" name="Submit" class="uk-button" value="<?php echo JText::_( 'COM_VIRTUEMART_BUTTON_LOGOUT'); ?>" />
         <input type="hidden" name="option" value="<?php echo $comUserOption ?>" />
         <?php if ( JVM_VERSION===1 ) { ?>
             <input type="hidden" name="task" value="logout" />
@@ -193,7 +203,7 @@ JHTML::_ ( 'behavior.modal' );
             <input type="hidden" name="task" value="user.logout" />
         <?php } ?>
         <?php echo JHtml::_('form.token'); ?>
-	<input type="hidden" name="return" value="<?php echo base64_encode($url) ?>" />
+		<input type="hidden" name="return" value="<?php echo base64_encode($url) ?>" />
     </form>
 
 <?php }

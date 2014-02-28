@@ -22,61 +22,47 @@ defined('_JEXEC') or die('Restricted access');
 ?>
 
 <fieldset>
-	<span class="userfields_info">
+	<legend>
 		<?php echo JText::_('COM_VIRTUEMART_SHOPPER_FORM_LBL') ?>
-	</span>
-	<table class="adminForm user-details">
+	</legend>
 <?php	if(Vmconfig::get('multix','none')!=='none'){ ?>
 
-		<tr>
-			<td class="key">
-				<label for="virtuemart_vendor_id">
-					<?php echo JText::_('COM_VIRTUEMART_PRODUCT_FORM_VENDOR') ?>:
-				</label>
-			</td>
-			<td>
-				<?php echo $this->lists['vendors']; ?>
-			</td>
-		</tr>
+		<div class="uk-form-row">
+			<label class="uk-form-label" for="virtuemart_vendor_id">
+				<?php echo JText::_('COM_VIRTUEMART_PRODUCT_FORM_VENDOR') ?>:
+			</label>
+			<div class="uk-form-controls"><?php echo $this->lists['vendors']; ?></div>
+		</div>
 <?php } ?>
 
-		<tr>
-			<td class="key">
-				<label for="perms">
-					<?php echo JText::_('COM_VIRTUEMART_USER_FORM_PERMS') ?>:
-				</label>
-			</td>
-			<td>
-				<?php echo $this->lists['perms']; ?>
-			</td>
-		</tr>
+	<div class="uk-form-row">
+		<label class="uk-form-label" for="perms">
+			<?php echo JText::_('COM_VIRTUEMART_USER_FORM_PERMS') ?>:
+		</label>
+		<div class="uk-form-controls"><?php echo $this->lists['perms']; ?></div>
+	</div>
 
-		<tr>
-			<td class="key">
-				<label for="customer_number">
-					<?php echo JText::_('COM_VIRTUEMART_USER_FORM_CUSTOMER_NUMBER') ?>:
-				</label>
-			</td>
-			<td>
-			 <?php if(Permissions::getInstance()->check('admin')) { ?>
-				<input type="text" class="inputbox" name="customer_number" id="customer_number" size="40" value="<?php echo  $this->lists['custnumber'];
-					?>" />
-			<?php } else {
-				echo $this->lists['custnumber'];
-			} ?>
-			</td>
-		</tr>
-		 <?php if($this->lists['shoppergroups']) { ?>
-		<tr>
-			<td class="key">
-				<label for="virtuemart_shoppergroup_id">
-					<?php echo JText::_('COM_VIRTUEMART_SHOPPER_FORM_GROUP') ?>:
-				</label>
-			</td>
-			<td>
-				<?php echo $this->lists['shoppergroups']; ?>
-			</td>
-		</tr>
-		<?php } ?>
-	</table>
+	<div class="uk-form-row">
+		<label class="uk-form-label" for="customer_number">
+			<?php echo JText::_('COM_VIRTUEMART_USER_FORM_CUSTOMER_NUMBER') ?>:
+		</label>
+		<div class="uk-form-controls">
+		 <?php if(Permissions::getInstance()->check('admin')) { ?>
+			<input type="text" class="inputbox" name="customer_number" id="customer_number" size="40" value="<?php echo  $this->lists['custnumber'];
+				?>" />
+		<?php } else {
+			echo $this->lists['custnumber'];
+		} ?>
+		</div>
+	</div>
+
+	 <?php if($this->lists['shoppergroups']) { ?>
+	<div class="uk-form-row">
+		<label class="uk-form-label" for="shoppergroups">
+			<?php echo JText::_('COM_VIRTUEMART_SHOPPER_FORM_GROUP') ?>:
+		</label>
+		<div class="uk-form-controls"><?php echo $this->lists['shoppergroups']; ?></div>
+	</div>
+	<?php } ?>
+
 </fieldset>

@@ -20,50 +20,35 @@
 defined('_JEXEC') or die('Restricted access'); ?>
 
 <div id="editcell">
-	<table class="adminlist">
-	<thead>
-	<tr>
-		<th>
-			<?php echo JText::_('COM_VIRTUEMART_ORDER_LIST_ORDER_NUMBER'); ?>
-		</th>
-		<th>
-			<?php echo JText::_('COM_VIRTUEMART_ORDER_LIST_CDATE'); ?>
-		</th>
-		<th>
-			<?php echo JText::_('COM_VIRTUEMART_ORDER_LIST_MDATE'); ?>
-		</th>
-		<th>
-			<?php echo JText::_('COM_VIRTUEMART_ORDER_LIST_STATUS'); ?>
-		</th>
-		<th>
-			<?php echo JText::_('COM_VIRTUEMART_ORDER_LIST_TOTAL'); ?>
-		</th>
-	</thead>
+	<ul class="uk-list uk-list-striped">
 	<?php
-		$k = 0;
-		foreach ($this->orderlist as $i => $row) {
+		foreach ($this->orderlist as $i => $row) :
 			$editlink = JRoute::_('index.php?option=com_virtuemart&view=orders&layout=details&order_number=' . $row->order_number);
 			?>
-			<tr class="<?php echo "row$k"; ?>">
-				<td align="left">
-					<a href="<?php echo $editlink; ?>" rel="nofollow"><?php echo $row->order_number; ?></a>
-				</td>
-				<td align="left">
-					<?php echo JHTML::_('date', $row->created_on); ?>
-				</td>
-				<td align="left">
-					<?php echo JHTML::_('date', $row->modified_on); ?>
-				</td>
-				<td align="left">
-					<?php echo ShopFunctions::getOrderStatusName($row->order_status); ?>
-				</td>
-				<td align="left">
-					<?php echo $this->currency->priceDisplay($row->order_total); ?>
-				</td>
-			</tr>
-	<?php
-			$k = 1 - $k;
-		}
-	?>
-	</table>
+			<li>
+				<div class="uk-grid"><div class="uk-width-large-4-10">
+					<dl class="uk-description-list uk-description-list-horizontal">
+						<dt><?php echo JText::_('COM_VIRTUEMART_ORDER_LIST_ORDER_NUMBER'); ?></dt>
+						<dd><a href="<?php echo $editlink; ?>" rel="nofollow"><?php echo $row->order_number; ?></a></dd>
+						<dt><?php echo JText::_('COM_VIRTUEMART_ORDER_LIST_STATUS'); ?></dt>
+						<dd><?php echo ShopFunctions::getOrderStatusName($row->order_status); ?></dd>
+						<dt><?php echo JText::_('COM_VIRTUEMART_ORDER_LIST_TOTAL'); ?></dt>
+						<dd><?php echo $this->currency->priceDisplay($row->order_total); ?></dd>
+					</dl>
+				</div>
+				<div class="uk-width-large-4-10 uk-width-4-5">
+					<dl class="uk-description-list uk-description-list-horizontal">
+						<dt><?php echo JText::_('COM_VIRTUEMART_ORDER_LIST_CDATE'); ?></dt>
+						<dd><?php echo JHTML::_('date', $row->created_on, 'd F Y'); ?></dd>
+						<dt><?php echo JText::_('COM_VIRTUEMART_ORDER_LIST_MDATE'); ?></dt>
+						<dd><?php echo JHTML::_('date', $row->modified_on, 'd F Y'); ?></dd>
+					</dl>
+				</div>
+				<div class="uk-width-1-5">
+					<a class="uk-button uk-button-small uk-float-right uk-margin-small-right" rel="nofollow" title="<?php echo JText::_('COM_VIRTUEMART_ACC_ORDER_INFO'); ?>" href="<?php echo $editlink; ?>"><i class="uk-icon-search"></i></a>
+				</div>
+			</li>
+			
+	<?php endforeach; ?>
+	</ul>
 </div>

@@ -28,19 +28,22 @@ if($this->format == 'pdf'){
 }
 
 ?>
-<table width="<?php echo $widthTable ?>%" cellspacing="0" cellpadding="0" border="0">
-	<tr align="left" class="sectiontableheader">
-		<th align="left" width="5%"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_SKU') ?></th>
-		<th align="left" colspan="2" width="<?php echo $widthTitle ?>%" ><?php echo JText::_('COM_VIRTUEMART_PRODUCT_NAME_TITLE') ?></th>
-		<th align="center" width="10%"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_PRODUCT_STATUS') ?></th>
-		<th align="right" width="10%" ><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_PRICE') ?></th>
-		<th align="left" width="5%"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_QTY') ?></th>
-		<?php if ( VmConfig::get('show_tax')) { ?>
-		<th align="right" width="10%" ><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_PRODUCT_TAX') ?></th>
-		  <?php } ?>
-		<th align="right" width="11%"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_SUBTOTAL_DISCOUNT_AMOUNT') ?></th>
-		<th align="right" width="10%"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_TOTAL') ?></th>
-	</tr>
+<table width="<?php echo $widthTable ?>%" class="uk-table uk-table-atriped" cellspacing="0" cellpadding="0" border="0">
+	<thead>
+		<tr align="left" class="sectiontableheader">
+			<th align="left" width="5%"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_SKU') ?></th>
+			<th align="left" colspan="2" width="<?php echo $widthTitle ?>%" ><?php echo JText::_('COM_VIRTUEMART_PRODUCT_NAME_TITLE') ?></th>
+			<th align="center" width="10%"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_PRODUCT_STATUS') ?></th>
+			<th align="right" width="10%" ><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_PRICE') ?></th>
+			<th align="left" width="5%"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_QTY') ?></th>
+			<?php if ( VmConfig::get('show_tax')) { ?>
+			<th align="right" width="10%" ><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_PRODUCT_TAX') ?></th>
+			  <?php } ?>
+			<th align="right" width="11%"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_SUBTOTAL_DISCOUNT_AMOUNT') ?></th>
+			<th align="right" width="10%"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_TOTAL') ?></th>
+		</tr>
+	</thead>
+	<tbody>
 <?php
 	foreach($this->orderdetails['items'] as $item) {
 		$qtt = $item->product_quantity ;
@@ -102,7 +105,9 @@ if($this->format == 'pdf'){
 <?php
 	}
 ?>
- <tr class="sectiontableentry1">
+ 	<tbody>
+ 	<tfoot>
+<tr class="sectiontableentry1">
 			<td colspan="6" align="right"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_PRODUCT_PRICES_TOTAL'); ?></td>
 
                         <?php if ( VmConfig::get('show_tax')) { ?>
@@ -200,5 +205,6 @@ if ($this->orderdetails['details']['BT']->coupon_discount <> 0.00) {
 		<td align="right"><span  class='priceColor2'><?php echo $this->currency->priceDisplay($this->orderdetails['details']['BT']->order_billDiscountAmount, $this->currency); ?></span></td>
 		<td align="right"><strong><?php echo $this->currency->priceDisplay($this->orderdetails['details']['BT']->order_total, $this->currency); ?></strong></td>
 	</tr>
+ 	</tfoot>
 
 </table>

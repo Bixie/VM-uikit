@@ -21,6 +21,7 @@
 //vmdebug('$this->category',$this->category);
 //vmdebug ('$this->category ' . $this->category->category_name);
 // Check to ensure this file is included in Joomla!
+
 defined ('_JEXEC') or die('Restricted access');
 JHTML::_ ('behavior.modal');
 
@@ -57,11 +58,11 @@ if (VmConfig::get ('showCategory', 1) and empty($this->keyword)) {
 					<div class="uk-panel uk-text-center">
 						<h3 class="uk-panel-title">
 							<a href="<?php echo $caturl ?>" title="<?php echo $category->category_name ?>">
-								<?php echo $category->category_name ?>
-								<br/>
 								<?php // if ($category->ids) {
 								echo $category->images[0]->displayMediaThumb ("", FALSE);
 								//} ?>
+								<br/>
+								<?php echo $category->category_name ?>
 							</a>
 						</h3>
 					</div>
@@ -110,20 +111,26 @@ if (VmConfig::get ('showCategory', 1) and empty($this->keyword)) {
 	if (!empty($this->products)) {
 		?>
 	<div class="uk-grid">
-		<div class="uk-width-7-10">
+		<div class="uk-width-4-10">
 			<?php echo $this->orderByList['orderby']; ?>
 			<?php echo $this->orderByList['manufacturer']; ?>
 		</div>
-		<div class="uk-width-3-10">
-			<?php echo $this->vmPagination->getResultsCounter ();?><br/>
-			<?php echo $this->vmPagination->getLimitBox ($this->category->limit_list_step); ?>
+		<div class="uk-width-6-10">
 			<div class="uk-form">
-				<?php echo $this->vmPagination->getPagesLinks (); ?>
-				<div class="uk-float-right"><?php echo $this->vmPagination->getPagesCounter (); ?></div>
+				<div class="uk-float-left">
+					<?php echo $this->vmPagination->getResultsCounter ();?>&nbsp; 
+					<em><?php echo $this->vmPagination->getPagesCounter (); ?></em>
+				</div>
+				<div class="uk-float-right uk-margin-left">
+					<?php echo $this->vmPagination->getLimitBox ($this->category->limit_list_step); ?>
+				</div>
+				<div class="uk-float-right">
+					<?php echo $this->vmPagination->getPagesLinks (); ?>
+				</div>
 			</div>
 		</div>
 	</div> <!-- end of orderby-displaynumber -->
-	<hr/>
+	<hr class="uk-margin-top-remove"/>
 	<h1 class="uk-h3"><?php echo $this->category->category_name; ?></h1>
 	<ul class="uk-grid" data-uk-grid-match="{target:'.uk-panel'}" data-uk-grid-margin>
 		<?php
@@ -138,17 +145,14 @@ if (VmConfig::get ('showCategory', 1) and empty($this->keyword)) {
 			// Show Products
 			?>
 			<li class="<?php echo $Browsecellwidth ?>">
-				<div class="uk-panel uk-text-center">
+				<div class="uk-panel uk-panel-box">
 					<div class="uk-grid">
-						<div class="uk-width-large-4-10 uk-width-medium-1-2">
-							<div class="uk-thumbnail uk-width-1-1">
-								<a title="<?php echo $product->product_name ?>" rel="vm-additional-images" href="<?php echo $product->link; ?>">
-									<?php
-										echo $product->images[0]->displayMediaThumb('class="browseProductImage"', false);
-									?>
-								</a>
-							</div>
-
+						<div class="uk-width-medium-1-3 uk-width-large-1-5">
+							<a title="<?php echo $product->product_name ?>" rel="vm-additional-images" href="<?php echo $product->link; ?>">
+								<?php
+									echo $product->images[0]->displayMediaThumb('class="browseProductImage" style="max-height:200px;"', false);
+								?>
+							</a><br/>
 							<!-- The "Average Customer Rating" Part -->
 							<?php // Output: Average Product Rating
 							if ($this->showRating) {
@@ -192,59 +196,75 @@ if (VmConfig::get ('showCategory', 1) and empty($this->keyword)) {
 									<small><?php echo JText::_ ('COM_VIRTUEMART_STOCK_LEVEL_DISPLAY_TITLE_TIP') ?></small>
 								</div>
 							<?php } ?>
+
 						</div>
-
-						<div class="uk-width-large-6-10 uk-width-medium-1-2">
-
-							<h2 class="uk-h4 uk-margin-remove"><?php echo JHTML::link ($product->link, $product->product_name); ?></h2>
-
-							<?php // Product Short Description
-							if (!empty($product->product_s_desc)) {
-								?>
-								<p class="product_s_desc">
-									<?php echo shopFunctionsF::limitStringByWord ($product->product_s_desc, 40, '...') ?>
-								</p>
-								<?php } ?>
-
-							<div class="product-price marginbottom12" id="productPrice<?php echo $product->virtuemart_product_id ?>">
-								<?php
-								if ($this->show_prices == '1') {
-									if ($product->prices['salesPrice']<=0 and VmConfig::get ('askprice', 1) and  !$product->images[0]->file_is_downloadable) {
-										echo JText::_ ('COM_VIRTUEMART_PRODUCT_ASKPRICE');
-									}
-									//todo add config settings
-									if ($this->showBasePrice) {
-										echo $this->currency->createPriceDiv ('basePrice', 'COM_VIRTUEMART_PRODUCT_BASEPRICE', $product->prices);
-										echo $this->currency->createPriceDiv ('basePriceVariant', 'COM_VIRTUEMART_PRODUCT_BASEPRICE_VARIANT', $product->prices);
-									}
-									echo $this->currency->createPriceDiv ('variantModification', 'COM_VIRTUEMART_PRODUCT_VARIANT_MOD', $product->prices);
-									if (round($product->prices['basePriceWithTax'],$this->currency->_priceConfig['salesPrice'][1]) != $product->prices['salesPrice']) {
-										echo '<div class="price-crossed" >' . $this->currency->createPriceDiv ('basePriceWithTax', 'COM_VIRTUEMART_PRODUCT_BASEPRICE_WITHTAX', $product->prices) . "</div>";
-									}
-									if (round($product->prices['salesPriceWithDiscount'],$this->currency->_priceConfig['salesPrice'][1]) != $product->prices['salesPrice']) {
-										echo $this->currency->createPriceDiv ('salesPriceWithDiscount', 'COM_VIRTUEMART_PRODUCT_SALESPRICE_WITH_DISCOUNT', $product->prices);
-									}
-									echo $this->currency->createPriceDiv ('salesPrice', 'COM_VIRTUEMART_PRODUCT_SALESPRICE', $product->prices);
-									if ($product->prices['discountedPriceWithoutTax'] != $product->prices['priceWithoutTax']) {
-										echo $this->currency->createPriceDiv ('discountedPriceWithoutTax', 'COM_VIRTUEMART_PRODUCT_SALESPRICE_WITHOUT_TAX', $product->prices);
-									} else {
-										echo $this->currency->createPriceDiv ('priceWithoutTax', 'COM_VIRTUEMART_PRODUCT_SALESPRICE_WITHOUT_TAX', $product->prices);
-									}
-									echo $this->currency->createPriceDiv ('discountAmount', 'COM_VIRTUEMART_PRODUCT_DISCOUNT_AMOUNT', $product->prices);
-									echo $this->currency->createPriceDiv ('taxAmount', 'COM_VIRTUEMART_PRODUCT_TAX_AMOUNT', $product->prices);
-									$unitPriceDescription = JText::sprintf ('COM_VIRTUEMART_PRODUCT_UNITPRICE', $product->product_unit);
-									echo $this->currency->createPriceDiv ('unitPrice', $unitPriceDescription, $product->prices);
-								} ?>
-
+						<div class="uk-width-medium-2-3 uk-width-large-4-5">
+							<div class="uk-grid">
+								<div class="uk-width-1-1">
+									<h2 class="uk-h4 uk-margin-remove"><?php echo JHTML::link ($product->link, $product->product_name); ?></h2>
+								</div>
 							</div>
-						</div>
-						<div class="uk-width-1-1">
-							<a class="uk-button uk-button-primary uk-float-right" 
-								href="<?php echo $product->link; ?>" 
-								title="<?php echo $product->product_name; ?>">
-								<?php echo JText::_ ( 'COM_VIRTUEMART_PRODUCT_DETAILS' ); ?>
-								&nbsp;<i class="uk-icon-angle-right"></i>
-							</a>
+							<div class="uk-grid uk-margin-small-top">
+								<div class="uk-width-1-2">
+								<?php // Product Short Description
+								if (!empty($product->product_s_desc)) {
+									?>
+									<p class="product_s_desc">
+										<?php echo shopFunctionsF::limitStringByWord ($product->product_s_desc, 140, '...') ?>
+									</p>
+									<?php } ?>
+									
+								</div>
+								<div class="uk-width-1-2">
+									<div class="product-price" id="productPrice<?php echo $product->virtuemart_product_id ?>">
+										<?php
+										if ($this->show_prices == '1') {
+											if ($product->prices['salesPrice']<=0 and VmConfig::get ('askprice', 1) and  !$product->images[0]->file_is_downloadable) {
+												echo JText::_ ('COM_VIRTUEMART_PRODUCT_ASKPRICE');
+											}
+											//todo add config settings
+											if ($this->showBasePrice) {
+												echo $this->currency->createPriceDiv ('basePrice', 'COM_VIRTUEMART_PRODUCT_BASEPRICE', $product->prices);
+												echo $this->currency->createPriceDiv ('basePriceVariant', 'COM_VIRTUEMART_PRODUCT_BASEPRICE_VARIANT', $product->prices);
+											}
+											echo $this->currency->createPriceDiv ('variantModification', 'COM_VIRTUEMART_PRODUCT_VARIANT_MOD', $product->prices);
+											if (round($product->prices['basePriceWithTax'],$this->currency->_priceConfig['salesPrice'][1]) != $product->prices['salesPrice']) {
+												echo '<div class="price-crossed" >' . $this->currency->createPriceDiv ('basePriceWithTax', 'COM_VIRTUEMART_PRODUCT_BASEPRICE_WITHTAX', $product->prices) . "</div>";
+											}
+											if (round($product->prices['salesPriceWithDiscount'],$this->currency->_priceConfig['salesPrice'][1]) != $product->prices['salesPrice']) {
+												echo $this->currency->createPriceDiv ('salesPriceWithDiscount', 'COM_VIRTUEMART_PRODUCT_SALESPRICE_WITH_DISCOUNT', $product->prices);
+											}
+											echo $this->currency->createPriceDiv ('salesPrice', 'COM_VIRTUEMART_PRODUCT_SALESPRICE', $product->prices);
+											if ($product->prices['discountedPriceWithoutTax'] != $product->prices['priceWithoutTax']) {
+												echo $this->currency->createPriceDiv ('discountedPriceWithoutTax', 'COM_VIRTUEMART_PRODUCT_SALESPRICE_WITHOUT_TAX', $product->prices);
+											} else {
+												echo $this->currency->createPriceDiv ('priceWithoutTax', 'COM_VIRTUEMART_PRODUCT_SALESPRICE_WITHOUT_TAX', $product->prices);
+											}
+											echo $this->currency->createPriceDiv ('discountAmount', 'COM_VIRTUEMART_PRODUCT_DISCOUNT_AMOUNT', $product->prices);
+											echo $this->currency->createPriceDiv ('taxAmount', 'COM_VIRTUEMART_PRODUCT_TAX_AMOUNT', $product->prices);
+											$unitPriceDescription = JText::sprintf ('COM_VIRTUEMART_PRODUCT_UNITPRICE', $product->product_unit);
+											echo $this->currency->createPriceDiv ('unitPrice', $unitPriceDescription, $product->prices);
+										} ?>
+
+									</div>
+								</div>
+								<div class="uk-width-1-2">
+									<a class="uk-button uk-button-primary" 
+										href="<?php echo $product->link; ?>" 
+										title="<?php echo $product->product_name; ?>">
+										<?php echo JText::_ ( 'COM_VIRTUEMART_PRODUCT_DETAILS' ); ?>
+										&nbsp;<i class="uk-icon-angle-right"></i>
+									</a>
+								</div>
+								<div class="uk-width-1-2">
+
+									<?php //inlcude module's addtocart
+									require_once(JPATH_ROOT.DS."modules/mod_virtuemart_product/helper.php");
+									echo mod_virtuemart_product::addtocart ($product);
+									?>
+
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -255,11 +275,19 @@ if (VmConfig::get ('showCategory', 1) and empty($this->keyword)) {
 		} // end of foreach ( $this->products as $product )
 		?>
 	</ul>
-	<div class="vm-pagination"><?php echo $this->vmPagination->getPagesLinks (); ?><span class="uk-float-right"><?php echo $this->vmPagination->getPagesCounter (); ?></span></div>
+	<div class="uk-margin-top">
+		<span class="uk-float-right"><?php echo $this->vmPagination->getPagesCounter (); ?></span>
+		<?php echo $this->vmPagination->getPagesLinks (); ?>
+	</div>
 
 		<?php
 	} elseif ($this->search !== NULL) {
 		echo JText::_ ('COM_VIRTUEMART_NO_RESULT') . ($this->keyword ? ' : (' . $this->keyword . ')' : '');
+	} else {
+		//bixie plugin
+		jimport('joomla.plugin.helper');
+		if (!class_exists('plgSystemBixsystem')) JPluginHelper::importPlugin('system','bixsystem');
+		echo plgSystemBixsystem::noProducts();
 	}
 	?>
 </div><!-- end browse-view -->

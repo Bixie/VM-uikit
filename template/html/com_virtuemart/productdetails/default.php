@@ -37,74 +37,6 @@ JHTML::_('behavior.modal');
 
 $MailLink = 'index.php?option=com_virtuemart&view=productdetails&task=recommend&virtuemart_product_id=' . $this->product->virtuemart_product_id . '&virtuemart_category_id=' . $this->product->virtuemart_category_id . '&tmpl=component';
 
-$boxFuncReco = '';
-$boxFuncAsk = '';
-if(VmConfig::get('usefancy',0)){
-	vmJsApi::js( 'fancybox/jquery.fancybox-1.3.4.pack');
-	vmJsApi::css('jquery.fancybox-1.3.4');
-	if(VmConfig::get('show_emailfriend',0)){
-		$boxReco = "jQuery.fancybox({
-				href: '" . $MailLink . "',
-				type: 'iframe',
-				height: '550'
-			});";
-	}
-	if(VmConfig::get('ask_question', 0)){
-		$boxAsk = "jQuery.fancybox({
-				href: '" . $this->askquestion_url . "',
-				type: 'iframe',
-				height: '550'
-			});";
-	}
-
-} else {
-	vmJsApi::js( 'facebox' );
-	vmJsApi::css( 'facebox' );
-	if(VmConfig::get('show_emailfriend',0)){
-		$boxReco = "jQuery.facebox({
-				iframe: '" . $MailLink . "',
-				rev: 'iframe|550|550'
-			});";
-	}
-	if(VmConfig::get('ask_question', 0)){
-		$boxAsk = "jQuery.facebox({
-				iframe: '" . $this->askquestion_url . "',
-				rev: 'iframe|550|550'
-			});";
-	}
-}
-if(VmConfig::get('show_emailfriend',0) ){
-	$boxFuncReco = "jQuery('a.recommened-to-friend').click( function(){
-					".$boxReco."
-			return false ;
-		});";
-}
-if(VmConfig::get('ask_question', 0)){
-	$boxFuncAsk = "jQuery('a.ask-a-question').click( function(){
-					".$boxAsk."
-			return false ;
-		});";
-}
-
-if(!empty($boxFuncAsk) or !empty($boxFuncReco)){
-	$document = JFactory::getDocument();
-	$document->addScriptDeclaration("
-//<![CDATA[
-	jQuery(document).ready(function($) {
-		".$boxFuncReco."
-		".$boxFuncAsk."
-	/*	$('.additional-images a').mouseover(function() {
-			var himg = this.href ;
-			var extension=himg.substring(himg.lastIndexOf('.')+1);
-			if (extension =='png' || extension =='jpg' || extension =='gif') {
-				$('.main-image img').attr('src',himg );
-			}
-			console.log(extension)
-		});*/
-	});
-//]]>
-");
-}
 
 
 ?>
@@ -115,13 +47,13 @@ if(!empty($boxFuncAsk) or !empty($boxFuncReco)){
     // Product Navigation
     if (VmConfig::get('product_navigation', 1)) {
 	?>
-		 <div class="uk-clearfix product-neighbours">
+		 <div class="uk-clearfix uk-margin-bottom product-neighbours">
 	    <?php
 	    if (!empty($this->product->neighbours ['next'][0])) :
 		$next_link = JRoute::_('index.php?option=com_virtuemart&view=productdetails&virtuemart_product_id=' . $this->product->neighbours ['next'][0] ['virtuemart_product_id'] . '&virtuemart_category_id=' . $this->product->virtuemart_category_id, FALSE);
 	    ?>
 			<div class="uk-float-right">
-				<a href="<?php echo $next_link; ?>"><?php echo $this->product->neighbours['next'][0]['product_name']; ?><i class="uk-icon-angle-double-right uk-margin-left"></i></a>
+				<a class="" href="<?php echo $next_link; ?>"><?php echo $this->product->neighbours['next'][0]['product_name']; ?><i class="uk-icon-angle-double-right uk-margin-small-left"></i></a>
 			</div>
 	    <?php endif; ?>
 	    <?php
@@ -129,7 +61,7 @@ if(!empty($boxFuncAsk) or !empty($boxFuncReco)){
 		$prev_link = JRoute::_('index.php?option=com_virtuemart&view=productdetails&virtuemart_product_id=' . $this->product->neighbours ['previous'][0] ['virtuemart_product_id'] . '&virtuemart_category_id=' . $this->product->virtuemart_category_id, FALSE);
 		?>
 			<div class="uk-float-left">
-				<a href="<?php echo $prev_link; ?>"><i class="uk-icon-angle-double-left uk-margin-right"></i><?php echo $this->product->neighbours['previous'][0]['product_name']; ?></a>
+				<a class="" href="<?php echo $prev_link; ?>"><i class="uk-icon-angle-double-left uk-margin-small-right"></i><?php echo $this->product->neighbours['previous'][0]['product_name']; ?></a>
 			</div>
 	    <?php endif; ?>
 		</div>
@@ -139,19 +71,19 @@ if(!empty($boxFuncAsk) or !empty($boxFuncReco)){
     <?php
 	$thisShouldBeAnOption = false;
 	if ($thisShouldBeAnOption) :
-	// Back To Category Button
-	if ($this->product->virtuemart_category_id) {
-		$catURL =  JRoute::_('index.php?option=com_virtuemart&view=category&virtuemart_category_id='.$this->product->virtuemart_category_id, FALSE);
-		$categoryName = $this->product->category_name ;
-	} else {
-		$catURL =  JRoute::_('index.php?option=com_virtuemart');
-		$categoryName = jText::_('COM_VIRTUEMART_SHOP_HOME') ;
-	}
-	
-	?>
-	<div class="back-to-category">
-    	<a href="<?php echo $catURL ?>" class="product-details" title="<?php echo $categoryName ?>"><?php echo JText::sprintf('COM_VIRTUEMART_CATEGORY_BACK_TO',$categoryName) ?></a>
-	</div>
+		// Back To Category Button
+		if ($this->product->virtuemart_category_id) {
+			$catURL =  JRoute::_('index.php?option=com_virtuemart&view=category&virtuemart_category_id='.$this->product->virtuemart_category_id, FALSE);
+			$categoryName = $this->product->category_name ;
+		} else {
+			$catURL =  JRoute::_('index.php?option=com_virtuemart');
+			$categoryName = jText::_('COM_VIRTUEMART_SHOP_HOME') ;
+		}
+		
+		?>
+		<div class="back-to-category">
+			<a href="<?php echo $catURL ?>" class="product-details" title="<?php echo $categoryName ?>"><?php echo JText::sprintf('COM_VIRTUEMART_CATEGORY_BACK_TO',$categoryName) ?></a>
+		</div>
 	<?php endif; ?>
 
 	<div class="uk-grid">
@@ -207,7 +139,7 @@ if(!empty($boxFuncAsk) or !empty($boxFuncReco)){
     ?>
 
     <div class="uk-grid" data-uk-grid-match="{target:'.uk-panel'}">
-		<div class="uk-width-medium-1-2 uk-width-large-3-5">
+		<div class="uk-width-medium-1-2">
 			<div class="uk-panel">
 	<?php
 	echo $this->loadTemplate('images');
@@ -215,7 +147,7 @@ if(!empty($boxFuncAsk) or !empty($boxFuncReco)){
 			</div>
 		</div>
 
-		<div class="uk-width-medium-1-2 uk-width-large-2-5">
+		<div class="uk-width-medium-1-2">
 			<div class="uk-panel uk-panel-box">
 
 			<?php
@@ -267,23 +199,37 @@ if(!empty($boxFuncAsk) or !empty($boxFuncReco)){
 				echo $this->loadTemplate('addtocart');
 	//		}  // Add To Cart Button END
 			?>
-			<div class="uk-grid uk-margin-top">
-				<div class="uk-width-medium-1-3">
-					<?php
-					// Availability
-					$stockhandle = VmConfig::get('stockhandle', 'none');
-					$product_available_date = substr($this->product->product_available_date,0,10);
-					$current_date = date("Y-m-d");
-					if (($this->product->product_in_stock - $this->product->product_ordered) < 1) {
-						if ($product_available_date != '0000-00-00' and $current_date < $product_available_date) {
+				<div class="uk-grid uk-margin-top">
+					<div class="uk-width-medium-1-3">
+
+						<?php
+						// Availability
+						$stockhandle = VmConfig::get('stockhandle', 'none');
+						$product_available_date = substr($this->product->product_available_date,0,10);
+						$current_date = date("Y-m-d");
+						if (($this->product->product_in_stock - $this->product->product_ordered) < 1) {
+							if ($product_available_date != '0000-00-00' and $current_date < $product_available_date) {
+							?>	<div class="availability">
+									<?php echo JText::_('COM_VIRTUEMART_PRODUCT_AVAILABLE_DATE') .': '. JHTML::_('date', $this->product->product_available_date, JText::_('DATE_FORMAT_LC4')); ?>
+								</div>
+							<?php
+							} else if ($stockhandle == 'risetime' and VmConfig::get('rised_availability') and empty($this->product->product_availability)) {
+							?>	<div class="availability">
+								<?php echo (file_exists(JPATH_BASE . DS . VmConfig::get('assets_general_path') . 'images/availability/' . VmConfig::get('rised_availability'))) ? JHTML::image(JURI::root() . VmConfig::get('assets_general_path') . 'images/availability/' . VmConfig::get('rised_availability', '7d.gif'), VmConfig::get('rised_availability', '7d.gif'), array('class' => 'availability')) : JText::_(VmConfig::get('rised_availability')); ?>
+							</div>
+							<?php
+							} else if (!empty($this->product->product_availability)) {
+							?>
+							<div class="availability">
+							<?php echo (file_exists(JPATH_BASE . DS . VmConfig::get('assets_general_path') . 'images/availability/' . $this->product->product_availability)) ? JHTML::image(JURI::root() . VmConfig::get('assets_general_path') . 'images/availability/' . $this->product->product_availability, $this->product->product_availability, array('class' => 'availability')) : JText::_($this->product->product_availability); ?>
+							</div>
+							<?php
+							}
+						}
+						else if ($product_available_date != '0000-00-00' and $current_date < $product_available_date) {
 						?>	<div class="availability">
 								<?php echo JText::_('COM_VIRTUEMART_PRODUCT_AVAILABLE_DATE') .': '. JHTML::_('date', $this->product->product_available_date, JText::_('DATE_FORMAT_LC4')); ?>
 							</div>
-						<?php
-						} else if ($stockhandle == 'risetime' and VmConfig::get('rised_availability') and empty($this->product->product_availability)) {
-						?>	<div class="availability">
-							<?php echo (file_exists(JPATH_BASE . DS . VmConfig::get('assets_general_path') . 'images/availability/' . VmConfig::get('rised_availability'))) ? JHTML::image(JURI::root() . VmConfig::get('assets_general_path') . 'images/availability/' . VmConfig::get('rised_availability', '7d.gif'), VmConfig::get('rised_availability', '7d.gif'), array('class' => 'availability')) : JText::_(VmConfig::get('rised_availability')); ?>
-						</div>
 						<?php
 						} else if (!empty($this->product->product_availability)) {
 						?>
@@ -291,21 +237,75 @@ if(!empty($boxFuncAsk) or !empty($boxFuncReco)){
 						<?php echo (file_exists(JPATH_BASE . DS . VmConfig::get('assets_general_path') . 'images/availability/' . $this->product->product_availability)) ? JHTML::image(JURI::root() . VmConfig::get('assets_general_path') . 'images/availability/' . $this->product->product_availability, $this->product->product_availability, array('class' => 'availability')) : JText::_($this->product->product_availability); ?>
 						</div>
 						<?php
-						}
-					}
-					else if ($product_available_date != '0000-00-00' and $current_date < $product_available_date) {
-					?>	<div class="availability">
-							<?php echo JText::_('COM_VIRTUEMART_PRODUCT_AVAILABLE_DATE') .': '. JHTML::_('date', $this->product->product_available_date, JText::_('DATE_FORMAT_LC4')); ?>
-						</div>
-					<?php
-					} else if (!empty($this->product->product_availability)) {
-					?>
-					<div class="availability">
-					<?php echo (file_exists(JPATH_BASE . DS . VmConfig::get('assets_general_path') . 'images/availability/' . $this->product->product_availability)) ? JHTML::image(JURI::root() . VmConfig::get('assets_general_path') . 'images/availability/' . $this->product->product_availability, $this->product->product_availability, array('class' => 'availability')) : JText::_($this->product->product_availability); ?>
+						} else {
+							echo '<br/>';
+						} //end availability
+						?>
+
+
 					</div>
+					<div class="uk-width-medium-2-3">
+						<?php
+						// Ask a question about this product
+						if (VmConfig::get('ask_question', 0) == 1 || VmConfig::get('show_manufacturers', 1) && !empty($this->product->virtuemart_manufacturer_id)) { ?>
+							<div class="uk-text-right">
+						<?php
+							if (VmConfig::get('ask_question', 0) == 1) {
+								?>
+								<a class="uk-button uk-button-small" href="<?php echo $this->askquestion_url ?>" rel="nofollow" data-lightbox="type:iframe;width:800px;height:90%">
+								<i class="uk-icon-question"></i>&nbsp;&nbsp;<?php echo JText::_('COM_VIRTUEMART_PRODUCT_ENQUIRY_LBL') ?></a><br/>
+							<?php }
+							?>
+
+							<?php
+							// Manufacturer of the Product
+							if (VmConfig::get('show_manufacturers', 1) && !empty($this->product->virtuemart_manufacturer_id)) {
+								echo $this->loadTemplate('manufacturer');
+							}?>
+							</div>
+						<?php
+						}
+						?>
+					</div>
+				</div>
+				<div class="uk-margin-top">
+
 					<?php
-					} //end availability
+					if (!empty($this->product->customfieldsSorted['normal'])) {
+					$this->position = 'normal';
+					echo $this->loadTemplate('customfields');
+					} // Product custom_fields END
+					
+					
+				if ($this->product->product_box || $this->product->product_packaging) {
+				?>
+					<ul class="uk-list">
+				<?php
+					// Product Packaging
+					if ($this->product->product_packaging) {
+						$product_unit = JText::_('COM_VIRTUEMART_UNIT_NAME_'.strtoupper($this->product->product_unit));
+						$product_packaging = $this->product->product_packaging;
+						$nrDec = 2;
+						if ($product_packaging == intval($product_packaging)) $nrDec = 0;
 					?>
+						<li>
+						<?php
+							echo JText::_('COM_VIRTUEMART_SEARCH_ORDER_PRODUCT_UNIT') . ': ' .number_format($product_packaging,$nrDec,',','.') . ' ' . $product_unit;
+						?>
+						</li>
+					<?php } 
+					
+					
+					if ($this->product->product_box) {
+					?>
+						<li>
+						<?php
+							echo JText::_('COM_VIRTUEMART_PRODUCT_UNITS_IN_BOX') .$this->product->product_box;
+						?>
+						</li>
+					<?php } // Product Packaging END
+					?>
+
 					<?php
 					if (is_array($this->productDisplayShipments)) {
 						foreach ($this->productDisplayShipments as $productDisplayShipment) {
@@ -318,32 +318,11 @@ if(!empty($boxFuncAsk) or !empty($boxFuncReco)){
 						}
 					}
 					?>
-				</div>
-				<div class="uk-width-medium-2-3">
-					<?php
-					// Ask a question about this product
-					if (VmConfig::get('ask_question', 0) == 1 || VmConfig::get('show_manufacturers', 1) && !empty($this->product->virtuemart_manufacturer_id)) { ?>
-						<div class="uk-text-right">
-					<?php
-						if (VmConfig::get('ask_question', 0) == 1) {
-							?>
-							<a class="uk-button uk-button-small" href="<?php echo $this->askquestion_url ?>" rel="nofollow" data-lightbox="type:iframe;width:800px;height:90%">
-							<i class="uk-icon-question"></i>&nbsp;&nbsp;<?php echo JText::_('COM_VIRTUEMART_PRODUCT_ENQUIRY_LBL') ?></a><br/>
-						<?php }
-						?>
-
-						<?php
-						// Manufacturer of the Product
-						if (VmConfig::get('show_manufacturers', 1) && !empty($this->product->virtuemart_manufacturer_id)) {
-							echo $this->loadTemplate('manufacturer');
-						}?>
-						</div>
-					<?php
+				</ul>
+				<?php
 					}
 					?>
 				</div>
-			</div>
-
 
 			</div>
 		</div>
@@ -363,22 +342,7 @@ if(!empty($boxFuncAsk) or !empty($boxFuncReco)){
         </div>
 	<?php
     } // Product Description END
-
-    if (!empty($this->product->customfieldsSorted['normal'])) {
-	$this->position = 'normal';
-	echo $this->loadTemplate('customfields');
-    } // Product custom_fields END
-    // Product Packaging
-    $product_packaging = '';
-    if ($this->product->product_box) {
 	?>
-        <div class="product-box">
-	    <?php
-	        echo JText::_('COM_VIRTUEMART_PRODUCT_UNITS_IN_BOX') .$this->product->product_box;
-	    ?>
-        </div>
-    <?php } // Product Packaging END
-    ?>
 
     <?php
     // Product Files

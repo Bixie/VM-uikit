@@ -33,9 +33,15 @@ JHTML::_( 'behavior.modal' );
 	if ($this->categories and VmConfig::get('show_categories', 1)) echo $this->loadTemplate('categories');
 	?>
 	<?php
-	# Show template for : topten,Featured, Latest Products if selected in config BE
-	if (!empty($this->products) ) { ?>
-		<?php echo $this->loadTemplate('products');
+	//bixie plugin
+	jimport('joomla.plugin.helper');
+	if (!class_exists('plgSystemBixsystem')) JPluginHelper::importPlugin('system','bixsystem');
+	if (!plgSystemBixsystem::validUser()) {
+		echo plgSystemBixsystem::noProducts();
+	} else {
+		# Show template for : topten,Featured, Latest Products if selected in config BE
+		if (!empty($this->products) ) { ?>
+			<?php echo $this->loadTemplate('products');
+		}
 	}
-	?>
-
+	
