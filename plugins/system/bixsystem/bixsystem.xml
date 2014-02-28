@@ -21,14 +21,14 @@
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-				<field name="showProps" type="radio" default="0" 
-					label="Toon meta-properties"
-					description="">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
-				</field>
+
 				<field name="allowedGroup" type="sql" default="" label="Toegestane groep" query="SELECT virtuemart_shoppergroup_id, shopper_group_name FROM #__virtuemart_shoppergroups WHERE published=1 ORDER BY ordering" key_field="virtuemart_shoppergroup_id" value_field="shopper_group_name">
 				</field>
+				<field name="profileItemid" type="menuitem"
+					default=""
+					label="Menuitem gebruikersprofiel VM"
+					size="1"
+				/>
 			</fieldset>
 		</fields>
 	</config>

@@ -11,15 +11,15 @@ defined('_JEXEC') or die;
 
 class plgSystemBixsystem extends JPlugin {
 
+	/*Statics
+	* must be called from within VM!
+	*/
 	public static function noProducts () {
 		jimport('joomla.application.module.helper');
 		//init vars
 		$document = JFactory::getDocument();
 		$html = '';
 		$position = false;
-// echo '<pre>';
-// print_r($vmUser);
-// echo '</pre>';
 		if (!self::validUser()) { //geen valid user
 			$position = 'noproducts';
 		}
@@ -30,10 +30,12 @@ class plgSystemBixsystem extends JPlugin {
 				$html .= $renderer->render($mod, array('style'=>'blank'));
 			}
 		}
+// echo '<pre style="margin-top:100px;">';
+// print_r($vmUser);
+// echo '</pre>';
 		return $html;
 	}
 	
-	//must be called from within VM!
 	public static function validUser () {
 		jimport('joomla.plugin.helper');
 		//plugin params
@@ -47,6 +49,7 @@ class plgSystemBixsystem extends JPlugin {
 		return in_array($bixParams->get('allowedGroup'),$vmUser->shopper_groups);
 	}
 
+	/*Events*/
 	public function onUserLogin($user, $options = array()) {
 		return true;
 	}
@@ -56,7 +59,13 @@ class plgSystemBixsystem extends JPlugin {
 		if ($app->isAdmin()) {
 			return true;
 		}
-		
+		$option = JRequest::getCmd('option');
+		$view = JRequest::getCmd('view');
+		if ($option == 'com_users' && (in_array($view,array('registration','profile')))) {
+			$app = JFactory::getApplication();
+			$link = JRoute::_('index.php?Itemid='.$this->params->get('profileItemid'));
+			$app->redirect($link);
+		}
 	}
 
 	public function onContentPrepareForm($form, $data) {
