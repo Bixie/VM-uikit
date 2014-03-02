@@ -86,10 +86,17 @@ if(typeof Virtuemart === "undefined")
                             }
                         );
                     } else {
-                        $.facebox.settings.closeImage = closeImage;
-                        $.facebox.settings.loadingImage = loadingImage;
-                        //$.facebox.settings.faceboxHtml = faceboxHtml;
-                        $.facebox({ text: txt }, 'my-groovy-style');
+						$.UIkit.notify({
+							message : txt,
+							status  : 'success',
+							timeout : 5000,
+							pos     : 'top-center'
+						});
+				
+                        // $.facebox.settings.closeImage = closeImage;
+                        // $.facebox.settings.loadingImage = loadingImage;
+                        // $.facebox.settings.faceboxHtml = faceboxHtml;
+                        // $.facebox({ text: txt }, 'my-groovy-style');
                     }
 
                     if ($(".vmCartModule")[0]) {
