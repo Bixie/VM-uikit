@@ -109,6 +109,7 @@ $this['asset']->addFile('css', 'css:notify.almost-flat.min.css');
 // add scripts
 $this['asset']->addFile('js', 'js:uikit.js');
 $this['asset']->addFile('js', 'js:notify.min.js');
+$this['asset']->addFile('js', 'js:systemmessage.js');
 $this['asset']->addFile('js', 'js:social.js');
 $this['asset']->addFile('js', 'js:theme.js');
 $this['asset']->addFile('js', 'js:masonry.js');
