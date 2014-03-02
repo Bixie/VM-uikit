@@ -663,6 +663,12 @@ class VirtueMartModelUser extends VmModel {
 			// 			vmError(Jtext::_('COM_VIRTUEMART_NOT_ABLE_TO_SAVE_USERINFO_DATA'));
 		} else {
 			if ($new) {
+				// Trigger the onContentChangeState event.
+				$dispatcher = JDispatcher::getInstance();
+				$result = $dispatcher->trigger('onNewVMuser', array($this, $newId));
+				if (in_array(false, $result, true)) {
+					vmError($dispatcher->getError());
+				}
 				$this->sendRegistrationEmail($user,$user->password_clear, $doUserActivation);
 				if ($doUserActivation ) {
 					vmInfo('COM_VIRTUEMART_REG_COMPLETE_ACTIVATE');
