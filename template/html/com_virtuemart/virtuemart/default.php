@@ -19,9 +19,16 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
 JHTML::_( 'behavior.modal' );
+$validUser = plgSystemBixsystem::validUser();
 ?>
 
 	<?php # Vendor Store Description
+	if (!$validUser) : ?>
+	<div class="uk-margin-bottom">
+		<?php echo plgSystemBixsystem::notValidUser(); ?>
+	</div>
+	<?php endif; ?>
+	<?php
 	if (!empty($this->vendor->vendor_store_desc) and VmConfig::get('show_store_desc', 1)) { ?>
 	<div class="uk-width-1-1 uk-panel uk-panel-box vendor-store-desc">
 		<?php echo $this->vendor->vendor_store_desc; ?>
@@ -36,7 +43,7 @@ JHTML::_( 'behavior.modal' );
 	//bixie plugin
 	jimport('joomla.plugin.helper');
 	if (!class_exists('plgSystemBixsystem')) JPluginHelper::importPlugin('system','bixsystem');
-	if (!plgSystemBixsystem::validUser()) {
+	if (!$validUser) {
 		echo plgSystemBixsystem::noProducts();
 	} else {
 		# Show template for : topten,Featured, Latest Products if selected in config BE
