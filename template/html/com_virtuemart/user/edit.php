@@ -24,19 +24,42 @@ defined('_JEXEC') or die('Restricted access');
 // Implement Joomla's form validation
 JHTML::_('behavior.formvalidation');
 JHTML::stylesheet('vmpanels.css', JURI::root().'components/com_virtuemart/assets/css/'); // VM_THEMEURL
+
+
+// $usermodel = VmModel::getModel('user');
+
+// Trigger the onContentChangeState event.
+// $dispatcher = JDispatcher::getInstance();
+// $result = $dispatcher->trigger('onNewVMuser', array($usermodel,$this->userDetails->virtuemart_user_id));
+// if (in_array(false, $result, true)) {
+	// print($dispatcher->getError());
+// }
+
+//bixie
+$bekendePostcode = JFactory::getApplication()->getUserState('plugin.system.bixsystem.postcodechecked','');
+
+JFactory::getDocument()->addScript('plugins/system/bixsystem/assets/mod_bix_postcode.js');
+
+
+
 ?>
-<style type="text/css">
-.invalid {
-	border-color: #f00;
-	background-color: #ffd;
-	color: #000;
-}
-label.invalid {
-	background-color: #fff;
-	color: #f00;
-}
-</style>
 <script language="javascript">
+	window.addEvent('domready',function() {
+		bixPostcode = new BixPostcode('zip_field',false,false,{
+			userForm: true,
+			bekendePostcode: '<?php echo $bekendePostcode;?>',
+			formEls: {
+				postcode: 'zip_field',
+				huisnummer: 'address_2_field',
+				straat: 'address_1_field',
+				plaats: 'city_field'
+			}
+		});
+		document.id('virtuemart_country_id').set('value',150); //==NL... sst
+	});
+
+
+
 function myValidator(f, t)
 {
 	f.task.value=t;
@@ -44,8 +67,15 @@ function myValidator(f, t)
 		f.submit();
 		return true;
 	} else {
+	console.log(document.formvalidator);
+		$$('input[aria-invalid],select[aria-invalid]').each(function (el) {
+			if (el.get('aria-invalid') == 'true')
+				el.addClass('uk-form-danger'); 
+			else 
+				el.removedClass('uk-form-danger')
+		});
 		var msg = '<?php echo addslashes( JText::_('COM_VIRTUEMART_USER_FORM_MISSING_REQUIRED_JS') ); ?>';
-		alert (msg);
+		jQuery.UIkit.notify(msg,'danger');
 	}
 	return false;
 }
@@ -75,8 +105,6 @@ function myValidator(f, t)
 			<?php echo $contents; ?>
 			
 		<?php else: ?>
-			<h2><?php echo JText::_('COM_VIRTUEMART_YOUR_ACCOUNT_REG');?></h2>
-			
 			<?php echo $contents; ?>
 			
 		<?php endif; ?>
