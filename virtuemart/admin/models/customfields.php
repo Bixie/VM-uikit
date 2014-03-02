@@ -1136,7 +1136,11 @@ class VirtueMartModelCustomfields extends VmModel {
 					} else {
 						$thumb = $this->displayCustomMedia (0).' ';
 					}
-					return JHTML::link (JRoute::_ ('index.php?option=com_virtuemart&view=productdetails&virtuemart_product_id=' . $related->virtuemart_product_id . '&virtuemart_category_id=' . $related->virtuemart_category_id,FALSE), $thumb   . $related->product_name, array('title' => $related->product_name));
+					$html = '<a class="uk-overlay" href="'.JRoute::_ ('index.php?option=com_virtuemart&view=productdetails&virtuemart_product_id=' . $related->virtuemart_product_id . '&virtuemart_category_id=' . $related->virtuemart_category_id,FALSE).'" title="'.$related->product_name.'">';
+					$html .= $thumb;
+					$html .= '<div class="uk-overlay-caption">'.$related->product_name.'</div>';
+					$html .= '</a>';
+					return $html;
 					break;
 				/* image */
 				case 'M':
