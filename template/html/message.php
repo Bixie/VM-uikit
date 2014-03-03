@@ -51,6 +51,7 @@ class JDocumentRendererMessage extends JDocumentRenderer
 		}
 		
 		$types = array(
+			'message'=>'info',
 			'info'=>'info',
 			'warning'=>'warning',
 			'error'=>'danger',
@@ -58,6 +59,7 @@ class JDocumentRendererMessage extends JDocumentRenderer
 		);
 
 		$icons = array(
+			'message'=>'uk-icon-info',
 			'info'=>'uk-icon-info',
 			'warning'=>'uk-icon-exclamation-circle',
 			'error'=>'uk-icon-ban',
@@ -73,6 +75,7 @@ class JDocumentRendererMessage extends JDocumentRenderer
 			$buffer .= "\n<div id=\"system-message\">";
 			foreach ($lists as $type => $msgs)
 			{
+				$ukType = $types[strtolower($type)]?$types[strtolower($type)]:'info';
 				if (count($msgs))
 				{
 					$buffer .= "\n<ul class=\"uk-list\">";
@@ -80,9 +83,9 @@ class JDocumentRendererMessage extends JDocumentRenderer
 					foreach ($msgs as $msg)
 					{
 						$buffer .= "\n\t<li>";
-						$buffer .= "\n\t\t<div class=\"uk-alert uk-alert-" . $types[strtolower($type)] . "\" data-type=\"" . $types[strtolower($type)] ."\"  data-uk-alert>";
+						$buffer .= "\n\t\t<div class=\"uk-alert uk-alert-" . $ukType . "\" data-type=\"" . $ukType ."\"  data-uk-alert>";
 						$buffer .= "\n\t\t<a href=\"\" class=\"uk-alert-close uk-close\"></a>".$msg;
-						$buffer .= "\n\t\t<span class=\"text\"><i class=\"" . $icons[strtolower($type)] . " uk-margin-left uk-margin-right\"></i>".$msg."</span>";
+						$buffer .= "\n\t\t<span class=\"text\"><i class=\"" . @$icons[strtolower($type)] . " uk-margin-left uk-margin-right\"></i>".$msg."</span>";
 						$buffer .= "\n\t\t</div>";
 						$buffer .= "\n\t</li>";
 					}

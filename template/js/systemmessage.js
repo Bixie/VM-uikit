@@ -3,14 +3,12 @@
 * (c)2014 Matthijs Alles - Bixie
 */
 
-
 jQuery(function($) {
-
 	(function(){
+		$('#system-message').addClass('uk-hidden');
 		$('#system-message [data-uk-alert]').each(function(){
 			var message = $(this);
 			showMessage(message.find('.text').html(),message.data('type'));
-			message.remove();
 		});
 
 	})();
