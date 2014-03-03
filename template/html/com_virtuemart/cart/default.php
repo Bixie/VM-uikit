@@ -61,7 +61,7 @@ $document->addStyleDeclaration ('#facebox .content {display: block !important; h
 		<div class="uk-width-1-3 uk-text-right">
 			<?php // Continue Shopping Button
 			if (!empty($this->continue_link_html)) {
-				echo $this->continue_link_html;
+				echo '<button data-uk-button><i class="uk-icon-chevron-right uk-margin-small-right"></i>' . $this->continue_link_html . '</button>';
 			} ?>
 		</div>
 	</div>
