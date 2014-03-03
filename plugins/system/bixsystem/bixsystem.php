@@ -70,6 +70,35 @@ class plgSystemBixsystem extends JPlugin {
 		return in_array($bixParams->get('allowedGroup'),$vmUser->shopper_groups);
 	}
 
+	public static function formatVMadres($fieldsArr) {
+		$index = array();
+		foreach ($fieldsArr as $field) {
+			$index[$field['name']] = $field;
+		}
+		$html = '<div class="uk-grid uk-address">';
+		$html .= '<div class="uk-width-1-5 uk-width-large-1-10">';
+		$html .= '<i class="uk-icon-user"></i><br/>';
+		$html .= '</div>';
+		$html .= '<div class="uk-width-4-5 uk-width-large-9-10">';
+		$html .= $index['email']['value'].'<br/>';
+		$html .= $index['title']['value'].' ';
+		$html .= $index['first_name']['value'].' ';
+		if ($index['middle_name']['value']) $html .= $index['middle_name']['value'].' ';
+		$html .= $index['last_name']['value'].'<br/>';
+		$html .= '</div>';
+		$html .= '<div class="uk-width-1-5 uk-width-large-1-10">';
+		$html .= '<i class="uk-icon-home"></i><br/>';
+		$html .= '</div>';
+		$html .= '<div class="uk-width-4-5 uk-width-large-9-10">';
+		$html .= $index['address_1']['value'].' ';
+		$html .= $index['address_2']['value'].'<br/>';
+		$html .= $index['city']['value'].'<br/>';
+		$html .= $index['country']['value'].'<br/>';
+		$html .= '</div>';
+		$html .= '</div>';
+		return $html;
+	}
+
 	public static function formatPostcode($postcodeRaw) {
 		$regEx = '/^(?P<num>[0-9]{4}).?(?P<alph>[a-z|A-Z]{2})?$/';
 		$postcodeArr = array();
@@ -89,9 +118,11 @@ class plgSystemBixsystem extends JPlugin {
 	/*Events*/
 	public function onAfterInitialise() {
 		$app = JFactory::getApplication();
-		$template = $app->getTemplate();
-		if (!class_exists('JDocumentRendererMessage') && file_exists(JPATH_THEMES . '/' . $template . '/html/message.php')) {
-			require_once JPATH_THEMES . '/' . $template . '/html/message.php';
+		if ($app->isSite()) {
+			$template = $app->getTemplate();
+			if (!class_exists('JDocumentRendererMessage') && file_exists(JPATH_THEMES . '/' . $template . '/html/message.php')) {
+				require_once JPATH_THEMES . '/' . $template . '/html/message.php';
+			}
 		}
 		return true;
 	}
