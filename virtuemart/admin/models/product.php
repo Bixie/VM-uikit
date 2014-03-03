@@ -2153,28 +2153,28 @@ class VirtueMartModelProduct extends VmModel {
 			// 		vmdebug('my manufacturers',$this->_db->getQuery());
 			$manufacturerLink = '';
 			if (count ($manufacturers) > 0) {
-				$manufacturerLink = '<div class="orderlist">';
+				$manufacturerLink = '<ul class="uk-nav">';
 				if ($virtuemart_manufacturer_id > 0) {
-					$manufacturerLink .= '<div><a title="" href="' . JRoute::_ ($fieldLink . $orderbyTxt . $orderDirLink , FALSE) . '">' . JText::_ ('COM_VIRTUEMART_SEARCH_SELECT_ALL_MANUFACTURER') . '</a></div>';
+					$manufacturerLink .= '<li><a title="" href="' . JRoute::_ ($fieldLink . $orderbyTxt . $orderDirLink , FALSE) . '">' . JText::_ ('COM_VIRTUEMART_SEARCH_SELECT_ALL_MANUFACTURER') . '</a></li>';
 				}
 				if (count ($manufacturers) > 1) {
 					foreach ($manufacturers as $mf) {
 						$link = JRoute::_ ($fieldLink . '&virtuemart_manufacturer_id=' . $mf->virtuemart_manufacturer_id . $orderbyTxt . $orderDirLink,FALSE);
 						if ($mf->virtuemart_manufacturer_id != $virtuemart_manufacturer_id) {
-							$manufacturerLink .= '<div><a title="' . $mf->mf_name . '" href="' . $link . '">' . $mf->mf_name . '</a></div>';
+							$manufacturerLink .= '<li><a title="' . $mf->mf_name . '" href="' . $link . '">' . $mf->mf_name . '</a></li>';
 						}
 						else {
-							$currentManufacturerLink = '<div class="title">' . JText::_ ('COM_VIRTUEMART_PRODUCT_DETAILS_MANUFACTURER_LBL') . '</div><div class="activeOrder">' . $mf->mf_name . '</div>';
+							$currentManufacturerLink = '<span class="uk-active">' . $mf->mf_name . '</span>';
 						}
 					}
 				}
 				elseif ($virtuemart_manufacturer_id > 0) {
-					$currentManufacturerLink = '<div class="title">' . JText::_ ('COM_VIRTUEMART_PRODUCT_DETAILS_MANUFACTURER_LBL') . '</div><div class="activeOrder">' . $manufacturers[0]->mf_name . '</div>';
+					$currentManufacturerLink = '<span class="uk-active">' . $manufacturers[0]->mf_name . '</span>';
 				}
 				else {
-					$currentManufacturerLink = '<div class="title">' . JText::_ ('COM_VIRTUEMART_PRODUCT_DETAILS_MANUFACTURER_LBL') . '</div><div class="Order"> ' . $manufacturers[0]->mf_name . '</div>';
+					$currentManufacturerLink = '<span class=""> ' . $manufacturers[0]->mf_name . '</span>';
 				}
-				$manufacturerLink .= '</div>';
+				$manufacturerLink .= '</ul>';
 			}
 			// }
 		}
@@ -2251,9 +2251,9 @@ class VirtueMartModelProduct extends VmModel {
 		$orderByList = '<div class="uk-button-dropdown" data-uk-dropdown>';
 		$orderByList .= 	'<a class="uk-button" title="' . $orderDirTxt . '" href="' . $link . '">';
 		$orderByList .= 		JText::_ ('COM_VIRTUEMART_SEARCH_ORDER_' . $orderby) ;
-		$orderByList .= 		'<i class="uk-icon-sort-alpha-' . strtolower($orderDir) . ' uk-margin-left"></i>';
+		$orderByList .= 		'<i class="uk-icon-sort-alpha-' . strtolower($orderDir) . ' uk-margin-small-left"></i>';
 		$orderByList .= 	'</a>';
-		$orderByList .= 	' <div class="uk-dropdown uk-dropdown-small">';
+		$orderByList .= 	'<div class="uk-dropdown uk-dropdown-small">';
 		$orderByList .= 	$orderByLink;
 		$orderByList .= 	'</div>';
 		$orderByList .= '</div>';
@@ -2261,11 +2261,20 @@ class VirtueMartModelProduct extends VmModel {
 		$manuList = '';
 		if (VmConfig::get ('show_manufacturers')) {
 			if (empty ($currentManufacturerLink)) {
-				$currentManufacturerLink = '<div class="title">' . JText::_ ('COM_VIRTUEMART_PRODUCT_DETAILS_MANUFACTURER_LBL') . '</div><div class="activeOrder">' . JText::_ ('COM_VIRTUEMART_SEARCH_SELECT_MANUFACTURER') . '</div>';
+				$currentManufacturerLink = '<span class="uk-active">' . JText::_ ('COM_VIRTUEMART_SEARCH_SELECT_MANUFACTURER') . '</span>';
 			}
-			$manuList = ' <div class="orderlistcontainer">' . $currentManufacturerLink;
-			$manuList .= $manufacturerLink . '</div><div class="clear"></div>';
-
+			
+			$manuList = '<div class="uk-button-dropdown" data-uk-dropdown>';
+			$manuList .= 	'<button class="uk-button" title="' . JText::_ ('COM_VIRTUEMART_PRODUCT_DETAILS_MANUFACTURER_LBL') . '" href="' . $link . '">';
+			$manuList .= 		$currentManufacturerLink ;
+			$manuList .= 		'<i class="uk-icon-filter uk-margin-small-left"></i>';
+			$manuList .= 	'</button>';
+			if (count ($manufacturers) != 1) {
+				$manuList .= 	'<div class="uk-dropdown uk-dropdown-small">';
+				$manuList .= 	$manufacturerLink;
+				$manuList .= 	'</div>';
+			}
+			$manuList .= '</div>';
 		}
 
 		return array('orderby'=> $orderByList, 'manufacturer'=> $manuList);
