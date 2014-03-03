@@ -249,7 +249,7 @@ if (VmConfig::get ('showCategory', 1) and empty($this->keyword)) {
 									</div>
 								</div>
 								<div class="uk-width-1-2">
-									<a class="uk-button uk-button-primary" 
+									<a class="uk-button uk-button-primary uk-margin-small-top" 
 										href="<?php echo $product->link; ?>" 
 										title="<?php echo $product->product_name; ?>">
 										<?php echo JText::_ ( 'COM_VIRTUEMART_PRODUCT_DETAILS' ); ?>
