@@ -56,3 +56,7 @@
 	/*text-align: center;*/
 	border-radius: 15px;
 }
+
+.uk-panel-box-gray {
+	background-color: #eaeaea;
+}

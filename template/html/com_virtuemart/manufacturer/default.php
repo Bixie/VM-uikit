@@ -37,7 +37,8 @@ if (!empty($this->manufacturers)) { ?>
 		$manufacturerURL = JRoute::_('index.php?option=com_virtuemart&view=manufacturer&virtuemart_manufacturer_id=' . $manufacturer->virtuemart_manufacturer_id, FALSE);
 		$manufacturerIncludedProductsURL = JRoute::_('index.php?option=com_virtuemart&view=category&virtuemart_manufacturer_id=' . $manufacturer->virtuemart_manufacturer_id, FALSE);
 		$manufacturerImage = $manufacturer->images[0]->displayMediaThumb("",false);
-
+		$manufacturerProductsURL = JRoute::_('index.php?option=com_virtuemart&view=category&virtuemart_manufacturer_id=' . $manufacturer->virtuemart_manufacturer_id, FALSE);
+		
 		// Show Category ?>
 		<li class="<?php echo $manufacturerCellWidth ?>">
 			<div class="uk-panel uk-panel-box uk-text-center">
@@ -46,6 +47,11 @@ if (!empty($this->manufacturers)) { ?>
 					<a title="<?php echo $manufacturer->mf_name; ?>" href="<?php echo $manufacturerURL; ?>"><?php echo $manufacturer->mf_name; ?></a>
 				</h3>
 			</div>
+				<a class="uk-button-small uk-float-left" target="_self" href="<?php echo $manufacturerProductsURL; ?>">
+					<i class="uk-icon-search uk-margin-small-right"></i>
+					<?php echo JText::sprintf('COM_VIRTUEMART_PRODUCT_FROM_MF',$manufacturer->mf_name); ?>
+					
+				</a>
 		</li>
 	<?php endforeach; ?>
 	</ul>
