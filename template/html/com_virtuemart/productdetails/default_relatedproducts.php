@@ -28,7 +28,7 @@ defined ( '_JEXEC' ) or die ( 'Restricted access' );
 	    if(!empty($field->display)) {
 			?>
 		<div class="uk-width-medium-1-<?php echo $count; ?> product-field-type-<?php echo $field->field_type ?> uk-text-center">
-			<div class="uk-panel uk-panel-box uk-panel-box-primary">
+			<div class="uk-panel uk-panel-box uk-panel-box-gray">
 				<?php echo $field->display ?>
 			</div>
 		</div>

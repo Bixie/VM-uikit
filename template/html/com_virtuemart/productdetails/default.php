@@ -140,7 +140,7 @@ $MailLink = 'index.php?option=com_virtuemart&view=productdetails&task=recommend&
 
     <div class="uk-grid" data-uk-grid-match="{target:'.uk-panel'}">
 		<div class="uk-width-medium-1-2">
-			<div class="uk-panel uk-panel-box uk-panel-box-primary">
+			<div class="uk-panel uk-panel-box uk-panel-box-gray">
 	<?php
 	echo $this->loadTemplate('images');
 	?>
@@ -279,7 +279,7 @@ $MailLink = 'index.php?option=com_virtuemart&view=productdetails&task=recommend&
 					
 				if ($this->product->product_box || $this->product->product_packaging) {
 				?>
-					<ul class="uk-list">
+					<ul class="uk-list uk-attributes">
 				<?php
 					// Product Packaging
 					if ($this->product->product_packaging) {
