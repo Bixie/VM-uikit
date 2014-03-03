@@ -112,8 +112,7 @@
 								width="60px"><?php echo JText::_ ('COM_VIRTUEMART_CART_PRICE') ?></th>
 							<th
 								align="right"
-								width="140px"><?php echo JText::_ ('COM_VIRTUEMART_CART_QUANTITY') ?>
-								/ <?php echo JText::_ ('COM_VIRTUEMART_CART_ACTION') ?></th>
+								width="140px"><?php echo JText::_ ('COM_VIRTUEMART_CART_QUANTITY') ?></th>
 
 
 							<?php if (VmConfig::get ('show_tax')) { ?>
@@ -146,8 +145,8 @@
 						</td>
 						<td align="center">
 							<?php
-					echo $this->cart->pricesUnformatted[$pkey]['discountedPriceWithoutTax'].'dfgh<br/>';
-					echo $this->cart->pricesUnformatted[$pkey]['priceWithoutTax'];
+					// echo $this->cart->pricesUnformatted[$pkey]['discountedPriceWithoutTax'].'dfgh<br/>';
+					// echo $this->cart->pricesUnformatted[$pkey]['priceWithoutTax'];
 							if (VmConfig::get ('checkout_show_origprice', 1) && $this->cart->pricesUnformatted[$pkey]['discountedPriceWithoutTax'] != $this->cart->pricesUnformatted[$pkey]['priceWithoutTax']) {
 								echo '<span class="line-through">' . $this->currencyDisplay->createPriceDiv ('basePriceVariant', '', $this->cart->pricesUnformatted[$pkey], TRUE, FALSE) . '</span><br />';
 							}
