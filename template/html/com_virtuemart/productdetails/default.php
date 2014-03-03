@@ -140,7 +140,7 @@ $MailLink = 'index.php?option=com_virtuemart&view=productdetails&task=recommend&
 
     <div class="uk-grid" data-uk-grid-match="{target:'.uk-panel'}">
 		<div class="uk-width-medium-1-2">
-			<div class="uk-panel">
+			<div class="uk-panel uk-panel-box uk-panel-box-primary">
 	<?php
 	echo $this->loadTemplate('images');
 	?>
