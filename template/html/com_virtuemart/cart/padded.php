@@ -20,13 +20,18 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
 
-echo '<a class="continue" href="' . $this->continue_link . '" >' . JText::_('COM_VIRTUEMART_CONTINUE_SHOPPING') . '</a>';
-echo '<a class="showcart floatright" href="' . $this->cart_link . '">' . JText::_('COM_VIRTUEMART_CART_SHOW') . '</a>';
 if($this->product){
-	echo '<h4>'.JText::sprintf('COM_VIRTUEMART_CART_PRODUCT_ADDED',$this->product->product_name,$this->product->quantity).'</h4>';
+	echo '<h5>'.JText::sprintf('COM_VIRTUEMART_CART_PRODUCT_ADDED',$this->product->product_name,$this->product->quantity).'</h5>';
 }
-
-if ($this->errorMsg) echo '<div>'.$this->errorMsg.'</div>';
+?> 
+<div class="uk-clearfix">
+	<a class="uk-showcart uk-float-right" href="<?php echo $this->cart_link; ?>">
+		<i class="uk-icon-shopping-cart uk-margin-small-right"></i><?php echo JText::_('COM_VIRTUEMART_CART_SHOW'); ?>
+		<i class="uk-icon-angle-double-right uk-margin-left"></i>
+	</a>
+</div>
+<?php
+if ($this->errorMsg) echo '<div class="uk-margin-top"><em>'.$this->errorMsg.'</em></div>';
 
 if(VmConfig::get('popup_rel',1)){
 	if($this->product and !empty($this->product->customfieldsRelatedProducts)){

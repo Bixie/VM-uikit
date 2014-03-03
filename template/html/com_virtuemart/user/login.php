@@ -131,10 +131,8 @@ JHTML::_ ( 'behavior.modal' );
 		</div>
 		<?php if ($this->from_cart ) : ?>
 			</div>
-		</div>
 		<?php endif; ?>
 		<?php if ($this->from_cart ) : ?>
-		<div class="uk-grid">
 			<div class="uk-width-1-3">
 		<?php endif; ?>
         <div class="uk-form-row" id="com-form-login-password">
@@ -146,10 +144,8 @@ JHTML::_ ( 'behavior.modal' );
 		</div>
 		<?php if ($this->from_cart ) : ?>
 			</div>
-		</div>
 		<?php endif; ?>
 		<?php if ($this->from_cart ) : ?>
-		<div class="uk-grid">
 			<div class="uk-width-1-3">
 		<?php endif; ?>
         <div class="uk-form-row" id="com-form-login-remember">
@@ -192,10 +188,20 @@ JHTML::_ ( 'behavior.modal' );
 <?php  } else if ( $user->id ) { ?>
 
    <form action="<?php echo JRoute::_('index.php'); ?>" method="post" name="login" id="form-login" class="uk-form">
-   
-        <h5><?php echo JText::sprintf( 'COM_VIRTUEMART_HINAME', $user->name ); ?></h5>
-		
-		<input type="submit" name="Submit" class="uk-button" value="<?php echo JText::_( 'COM_VIRTUEMART_BUTTON_LOGOUT'); ?>" />
+		<?php if ($this->from_cart ) : ?>
+  		<div class="uk-grid">
+			<div class="uk-width-2-3">
+		<?php endif; ?>
+				<h5><?php echo JText::sprintf( 'COM_VIRTUEMART_HINAME', $user->name ); ?></h5>
+		<?php if ($this->from_cart ) : ?>
+			</div>
+			<div class="uk-width-1-3 uk-text-right">
+		<?php endif; ?>
+				<input type="submit" name="Submit" class="uk-button" value="<?php echo JText::_( 'COM_VIRTUEMART_BUTTON_LOGOUT'); ?>" />
+		<?php if ($this->from_cart ) : ?>
+			</div>
+		</div>
+		<?php endif; ?>
         <input type="hidden" name="option" value="<?php echo $comUserOption ?>" />
         <?php if ( JVM_VERSION===1 ) { ?>
             <input type="hidden" name="task" value="logout" />

@@ -22,9 +22,11 @@ defined('_JEXEC') or die('Restricted access');
 
 
 <form method="post" id="userForm" name="enterCouponCode" action="<?php echo JRoute::_('index.php'); ?>">
-    <input type="text" name="coupon_code" size="20" maxlength="50" class="coupon" alt="<?php echo $this->coupon_text ?>" value="<?php echo $this->coupon_text; ?>" onblur="if(this.value=='') this.value='<?php echo $this->coupon_text; ?>';" onfocus="if(this.value=='<?php echo $this->coupon_text; ?>') this.value='';" />
+    <input type="text" name="coupon_code" size="20" maxlength="50" class="uk-width-5-10" alt="<?php echo $this->coupon_text ?>" value="<?php echo $this->coupon_text; ?>" onblur="if(this.value=='') this.value='<?php echo $this->coupon_text; ?>';" onfocus="if(this.value=='<?php echo $this->coupon_text; ?>') this.value='';" />
     <span class="details-button">
-    <input class="details-button" type="submit" title="<?php echo JText::_('COM_VIRTUEMART_SAVE'); ?>" value="<?php echo JText::_('COM_VIRTUEMART_SAVE'); ?>"/>
+    <button class="uk-button" type="submit" title="<?php echo JText::_('COM_VIRTUEMART_SAVE'); ?>">
+		<i class="uk-icon-check"></i>
+	</button>
     </span>
     <input type="hidden" name="option" value="com_virtuemart" />
     <input type="hidden" name="view" value="cart" />

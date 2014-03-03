@@ -19,42 +19,9 @@
 
 // Check to ensure this file is included in Joomla!
 defined ('_JEXEC') or die('Restricted access');
-if(VmConfig::get('usefancy',0)){
-	vmJsApi::js( 'fancybox/jquery.fancybox-1.3.4.pack');
-	vmJsApi::css('jquery.fancybox-1.3.4');
-	$box = "
-//<![CDATA[
-	jQuery(document).ready(function($) {
-		$('div#full-tos').hide();
-		var con = $('div#full-tos').html();
-		$('a#terms-of-service').click(function(event) {
-			event.preventDefault();
-			$.fancybox ({ div: '#full-tos', content: con });
-		});
-	});
-
-//]]>
-";
-} else {
-	vmJsApi::js ('facebox');
-	vmJsApi::css ('facebox');
-	$box = "
-//<![CDATA[
-	jQuery(document).ready(function($) {
-		$('div#full-tos').hide();
-		$('a#terms-of-service').click(function(event) {
-			event.preventDefault();
-			$.facebox( { div: '#full-tos' }, 'my-groovy-style');
-		});
-	});
-
-//]]>
-";
-}
 
 JHtml::_ ('behavior.formvalidation');
 $document = JFactory::getDocument ();
-$document->addScriptDeclaration ($box);
 $document->addScriptDeclaration ("
 
 //<![CDATA[
@@ -83,40 +50,42 @@ $document->addStyleDeclaration ('#facebox .content {display: block !important; h
 ?>
 
 <div class="cart-view">
-	<div>
-		<div class="width50 floatleft">
+	<div class="uk-grid">
+		<div class="uk-width-2-3">
 			<h1><?php echo JText::_ ('COM_VIRTUEMART_CART_TITLE'); ?></h1>
 		</div>
 		<?php if (VmConfig::get ('oncheckout_show_steps', 1) && $this->checkout_task === 'confirm') {
 		vmdebug ('checkout_task', $this->checkout_task);
 		echo '<div class="checkoutStep" id="checkoutStep4">' . JText::_ ('COM_VIRTUEMART_USER_FORM_CART_STEP4') . '</div>';
 	} ?>
-		<div class="width50 floatleft right">
+		<div class="uk-width-1-3 uk-text-right">
 			<?php // Continue Shopping Button
 			if (!empty($this->continue_link_html)) {
 				echo $this->continue_link_html;
 			} ?>
 		</div>
-		<div class="clear"></div>
 	</div>
 
-
-
-	<?php echo shopFunctionsF::getLoginForm ($this->cart, FALSE);
-
+	<div class="uk-grid">
+		<div class="uk-width-1-1">
+			<?php echo shopFunctionsF::getLoginForm($this->cart, false); ?>
+		</div>
+	</div>
+	<?php
 	// This displays the form to change the current shopper
 	$adminID = JFactory::getSession()->get('vmAdminID');
 	if ((JFactory::getUser()->authorise('core.admin', 'com_virtuemart') || JFactory::getUser($adminID)->authorise('core.admin', 'com_virtuemart')) && (VmConfig::get ('oncheckout_change_shopper', 0))) { 
 		echo $this->loadTemplate ('shopperform');
 	}
+	?>
 
-
-
+<?php
 	// This displays the pricelist MUST be done with tables, because it is also used for the emails
 	echo $this->loadTemplate ('pricelist');
 
 	// added in 2.0.8
 	?>
+
 	<div id="checkout-advertise-box">
 		<?php
 		if (!empty($this->checkoutAdvertise)) {
@@ -139,56 +108,71 @@ $document->addStyleDeclaration ('#facebox .content {display: block !important; h
 			$taskRoute = '';
 		}
 	?>
-		<form method="post" id="checkoutForm" name="checkoutForm" action="<?php echo JRoute::_ ('index.php?option=com_virtuemart&view=cart' . $taskRoute, $this->useXHTML, $this->useSSL); ?>">
+	<form method="post" class="uk-form"id="checkoutForm" name="checkoutForm" action="<?php echo JRoute::_ ('index.php?option=com_virtuemart&view=cart' . $taskRoute, $this->useXHTML, $this->useSSL); ?>">
 	<?php } ?>
-		<?php // Leave A Comment Field ?>
-		<div class="customer-comment marginbottom15">
-			<span class="comment"><?php echo JText::_ ('COM_VIRTUEMART_COMMENT_CART'); ?></span><br/>
-			<textarea class="customer-comment" name="customer_comment" cols="60" rows="1"><?php echo $this->cart->customer_comment; ?></textarea>
-		</div>
-		<?php // Leave A Comment Field END ?>
+		<div class="uk-grid uk-margin-top" data-uk-grid-match="{target:'.uk-panel'}">
+			<div class="uk-width-medium-1-2">
+				<div class="uk-panel uk-panel-box">
+					<fieldset>
+						<legend><?php echo JText::_ ('COM_VIRTUEMART_COMMENT_CART'); ?></legend>
+						<?php // Leave A Comment Field ?>
+						<textarea class="customer-comment uk-width-1-1" name="customer_comment" cols="30" rows="3"><?php echo $this->cart->customer_comment; ?></textarea>
+					</fieldset>
+				</div>
+			</div>
+			<div class="uk-width-medium-1-2">
+				<div class="uk-panel uk-panel-box">
+					<fieldset>
+						<legend><?php echo JText::_ ('Bevestigen'); ?></legend>
+						<?php // Continue and Checkout Button ?>
+						<div class="checkout-button-top">
 
+							<?php // Terms Of Service Checkbox
+							if (!class_exists ('VirtueMartModelUserfields')) {
+								require(JPATH_VM_ADMINISTRATOR . DS . 'models' . DS . 'userfields.php');
+							}
+							$userFieldsModel = VmModel::getModel ('userfields');
+							if ($userFieldsModel->getIfRequired ('agreed')) {
+									if (!class_exists ('VmHtml')) {
+										require(JPATH_VM_ADMINISTRATOR . DS . 'helpers' . DS . 'html.php');
+									}
+									?>
+										<div class="uk-grid">
+											<div class="uk-width-1-10 terms-of-service">
+											<?php echo VmHtml::checkbox ('tosAccepted', $this->cart->tosAccepted, 1, 0, 'class="terms-of-service"'); ?>
+											</div>
+									<?php
+									if (VmConfig::get ('oncheckout_show_legal_info', 1)) {
+										?>
+											<div class="uk-width-9-10 terms-of-service">
 
-
-		<?php // Continue and Checkout Button ?>
-		<div class="checkout-button-top">
-
-			<?php // Terms Of Service Checkbox
-			if (!class_exists ('VirtueMartModelUserfields')) {
-				require(JPATH_VM_ADMINISTRATOR . DS . 'models' . DS . 'userfields.php');
-			}
-			$userFieldsModel = VmModel::getModel ('userfields');
-			if ($userFieldsModel->getIfRequired ('agreed')) {
-					if (!class_exists ('VmHtml')) {
-						require(JPATH_VM_ADMINISTRATOR . DS . 'helpers' . DS . 'html.php');
-					}
-					echo VmHtml::checkbox ('tosAccepted', $this->cart->tosAccepted, 1, 0, 'class="terms-of-service"');
-
-					if (VmConfig::get ('oncheckout_show_legal_info', 1)) {
-						?>
-						<div class="terms-of-service">
-
-							<label for="tosAccepted">
-								<a href="<?php JRoute::_ ('index.php?option=com_virtuemart&view=vendor&layout=tos&virtuemart_vendor_id=1', FALSE) ?>" class="terms-of-service" id="terms-of-service" rel="facebox"
-							  	 target="_blank">
-									<span class="vmicon vm2-termsofservice-icon"></span>
-									<?php echo JText::_ ('COM_VIRTUEMART_CART_TOS_READ_AND_ACCEPTED'); ?>
-								</a>
-							</label>
-
-							<div id="full-tos">
-								<h2><?php echo JText::_ ('COM_VIRTUEMART_CART_TOS'); ?></h2>
-								<?php echo $this->cart->vendor->vendor_terms_of_service; ?>
-							</div>
-
+												<label for="tosAccepted">
+													<a href="#full-tos" class="terms-of-service" id="terms-of-service" data-lightbox="type:inline;width:800px;height:90%"
+													 target="_blank">
+														<span class="vmicon vm2-termsofservice-icon"></span>
+														<?php echo JText::_ ('COM_VIRTUEMART_CART_TOS_READ_AND_ACCEPTED'); ?>
+													</a>
+												</label>
+												<div class="uk-hidden">
+													<div id="full-tos">
+														<h2><?php echo JText::_ ('COM_VIRTUEMART_CART_TOS'); ?></h2>
+														<?php echo $this->cart->vendor->vendor_terms_of_service; ?>
+													</div>
+												</div>
+											</div>
+										</div><?php //echo JRoute::_ ('index.php?option=com_virtuemart&view=vendor&layout=tos&virtuemart_vendor_id=1', FALSE) ?>
+										<?php
+									} // VmConfig::get('oncheckout_show_legal_info',1)
+									//echo '<span class="tos">'. JText::_('COM_VIRTUEMART_CART_TOS_READ_AND_ACCEPTED').'</span>';
+							}
+							echo $this->checkout_link_html;
+							?>
 						</div>
-						<?php
-					} // VmConfig::get('oncheckout_show_legal_info',1)
-					//echo '<span class="tos">'. JText::_('COM_VIRTUEMART_CART_TOS_READ_AND_ACCEPTED').'</span>';
-			}
-			echo $this->checkout_link_html;
-			?>
+					</fieldset>
+				</div>
+			</div>
 		</div>
+
 		<?php // Continue and Checkout Button END ?>
 		<input type='hidden' name='order_language' value='<?php echo $this->order_language; ?>'/>
 		<input type='hidden' id='STsameAsBT' name='STsameAsBT' value='<?php echo $this->cart->STsameAsBT; ?>'/>
