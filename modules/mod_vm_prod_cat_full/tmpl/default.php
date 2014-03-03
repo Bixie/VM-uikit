@@ -78,7 +78,24 @@ if ( $cat_filter && ! $settings['current_filter'] ) {
 }
 // Call the display function for the first menu item:
 vmFCLBuildMenu( $catid, $level, $settings, $current_cat, $active );
+?>
 
+<ul class="uk-nav uk-nav-parent-icon uk-nav-side uk-margin-top" data-uk-nav="{multiple:true}">
+	<li class="uk-parent <?php echo $virtuemart_manufacturer_id>0?'uk-active':'';?>">
+		<a href="#"><?php echo JText::_('COM_VIRTUEMART_MANUFACTURERS_LBL'); ?></a>
+		<ul class="uk-nav-sub">
+		<?php foreach ($manufacturers as $manufacturer) :
+			$link = JRoute::_('index.php?option=com_virtuemart&view=category&virtuemart_manufacturer_id=' . $manufacturer->virtuemart_manufacturer_id);
+			?>
+			<li>
+				<a class="<?php echo $virtuemart_manufacturer_id==$manufacturer->virtuemart_manufacturer_id?'uk-active':'';?>" href="<?php echo $link; ?>">
+				<?php echo $manufacturer->mf_name; ?></a>
+			</li>
+		<?php endforeach; ?>
+		</ul>
+	</li>
+</ul>
+<?php
 // Are there any better ways to make this follow joomla's MVC pattern
 // (by outputting a tree structure returned by helper class, for ex)? like:
 // while ($item) {
