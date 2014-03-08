@@ -158,7 +158,7 @@
 												// echo $prow->salesPrice ;
 							?>
 						</td>
-						<td align="right"><?php
+						<td align="left"><?php
 					//				$step=$prow->min_order_level;
 									if ($prow->step_order_level)
 										$step=$prow->step_order_level;

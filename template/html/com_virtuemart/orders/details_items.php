@@ -28,18 +28,18 @@ if($this->format == 'pdf'){
 }
 
 ?>
-<table width="<?php echo $widthTable ?>%" class="uk-table uk-table-atriped" cellspacing="0" cellpadding="0" border="0">
+<table width="<?php echo $widthTable ?>%" class="uk-table uk-table-striped" cellspacing="0" cellpadding="0" border="0">
 	<thead>
 		<tr align="left" class="sectiontableheader">
 			<th align="left" width="5%"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_SKU') ?></th>
-			<th align="left" colspan="2" width="<?php echo $widthTitle ?>%" ><?php echo JText::_('COM_VIRTUEMART_PRODUCT_NAME_TITLE') ?></th>
-			<th align="center" width="10%"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_PRODUCT_STATUS') ?></th>
+			<th align="left" colspan="2" width="35%" ><?php echo JText::_('COM_VIRTUEMART_PRODUCT_NAME_TITLE') ?></th>
+			<th align="left" width="15%"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_PRODUCT_STATUS') ?></th>
 			<th align="right" width="10%" ><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_PRICE') ?></th>
-			<th align="left" width="5%"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_QTY') ?></th>
+			<th align="right" width="5%"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_QTY') ?></th>
 			<?php if ( VmConfig::get('show_tax')) { ?>
 			<th align="right" width="10%" ><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_PRODUCT_TAX') ?></th>
 			  <?php } ?>
-			<th align="right" width="11%"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_SUBTOTAL_DISCOUNT_AMOUNT') ?></th>
+			<th align="right" width="10%"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_SUBTOTAL_DISCOUNT_AMOUNT') ?></th>
 			<th align="right" width="10%"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_TOTAL') ?></th>
 		</tr>
 	</thead>
