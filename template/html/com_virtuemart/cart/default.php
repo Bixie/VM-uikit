@@ -147,14 +147,13 @@ $document->addStyleDeclaration ('#facebox .content {display: block !important; h
 											<div class="uk-width-9-10 terms-of-service">
 
 												<label for="tosAccepted">
-													<a href="#full-tos" class="terms-of-service" id="terms-of-service" data-lightbox="type:inline;width:800px;height:90%"
-													 target="_blank">
-														<span class="vmicon vm2-termsofservice-icon"></span>
+													<a href="#full-tos" class="terms-of-service" id="terms-of-service" data-uk-modal>
 														<?php echo JText::_ ('COM_VIRTUEMART_CART_TOS_READ_AND_ACCEPTED'); ?>
 													</a>
 												</label>
-												<div class="uk-hidden">
-													<div id="full-tos">
+												<div id="full-tos" class="uk-modal">
+													<div class="uk-modal-dialog">
+														<a class="uk-modal-close uk-close"></a>
 														<h2><?php echo JText::_ ('COM_VIRTUEMART_CART_TOS'); ?></h2>
 														<?php echo $this->cart->vendor->vendor_terms_of_service; ?>
 													</div>

@@ -11,6 +11,8 @@ tmp/
 *.bak
 *.swp
 *~.nib
+.idea/workspace.xml
+
 local.properties
 .classpath
 .settings/
