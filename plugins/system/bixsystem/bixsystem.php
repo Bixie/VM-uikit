@@ -1,22 +1,32 @@
 <?php
 /**
- *	COM_BIXPRINTSHOP - Online-PrintStore for Joomla
+ *    COM_BIXPRINTSHOP - Online-PrintStore for Joomla
  *  Copyright (C) 2010-2012 Matthijs Alles
- *	Bixie.nl
- *
+ *    Bixie.nl
+
  */
 
 // No direct access
 defined('_JEXEC') or die;
 
+/**
+ * Class plgSystemBixsystem
+ */
 class plgSystemBixsystem extends JPlugin {
 
-	public function plgBixprintshopAdresPostcodefill(&$subject, $config = array()) {
+	/**
+	 * @param       $subject
+	 * @param array $config
+	 */
+	public function plgBixprintshopAdresPostcodefill (&$subject, $config = array()) {
 		parent::__construct($subject, $config);
 	}
 	/*Statics
 	* must be called from within VM!
 	*/
+	/**
+	 * @return string
+	 */
 	public static function noProducts () {
 		jimport('joomla.application.module.helper');
 		//init vars
@@ -28,8 +38,8 @@ class plgSystemBixsystem extends JPlugin {
 		//modulehelper
 		if ($position) {
 			$renderer = JFactory::getDocument()->loadRenderer('module');
-			foreach (JModuleHelper::getModules($position) as $mod)  {
-				$html .= $renderer->render($mod, array('style'=>'blank'));
+			foreach (JModuleHelper::getModules($position) as $mod) {
+				$html .= $renderer->render($mod, array('style' => 'blank'));
 			}
 		}
 // echo '<pre style="margin-top:100px;">';
@@ -37,18 +47,20 @@ class plgSystemBixsystem extends JPlugin {
 // echo '</pre>';
 		return $html;
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	public static function notValidUser () {
 		jimport('joomla.application.module.helper');
 		//init vars
-		$document = JFactory::getDocument();
 		$html = '';
 		$position = 'notvaliduser';
 		//modulehelper
 		if ($position) {
 			$renderer = JFactory::getDocument()->loadRenderer('module');
-			foreach (JModuleHelper::getModules($position) as $mod)  {
-				$html .= $renderer->render($mod, array('style'=>'blank'));
+			foreach (JModuleHelper::getModules($position) as $mod) {
+				$html .= $renderer->render($mod, array('style' => 'blank'));
 			}
 		}
 // echo '<pre style="margin-top:100px;">';
@@ -56,21 +68,28 @@ class plgSystemBixsystem extends JPlugin {
 // echo '</pre>';
 		return $html;
 	}
-	
+
+	/**
+	 * @return bool
+	 */
 	public static function validUser () {
 		jimport('joomla.plugin.helper');
 		//plugin params
-		$bixPlugin = JPluginHelper::getPlugin('system','bixsystem');
+		$bixPlugin = JPluginHelper::getPlugin('system', 'bixsystem');
 		$bixParams = new JRegistry();
 		$bixParams->loadString($bixPlugin->params);
 		//vmuser
 		$usermodel = VmModel::getModel('user');
 		$vmUser = $usermodel->getUser();
 
-		return in_array($bixParams->get('allowedGroup'),$vmUser->shopper_groups);
+		return in_array($bixParams->get('allowedGroup'), $vmUser->shopper_groups);
 	}
 
-	public static function formatVMadres($fieldsArr) {
+	/**
+	 * @param $fieldsArr
+	 * @return string
+	 */
+	public static function formatVMadres ($fieldsArr) {
 		$index = array();
 		foreach ($fieldsArr as $field) {
 			$index[$field['name']] = $field;
@@ -80,30 +99,34 @@ class plgSystemBixsystem extends JPlugin {
 		$html .= '<i class="uk-icon-user"></i><br/>';
 		$html .= '</div>';
 		$html .= '<div class="uk-width-4-5 uk-width-large-9-10">';
-		$html .= $index['email']['value'].'<br/>';
-		$html .= $index['title']['value'].' ';
-		$html .= $index['first_name']['value'].' ';
-		if ($index['middle_name']['value']) $html .= $index['middle_name']['value'].' ';
-		$html .= $index['last_name']['value'].'<br/>';
+		$html .= $index['email']['value'] . '<br/>';
+		$html .= $index['title']['value'] . ' ';
+		$html .= $index['first_name']['value'] . ' ';
+		if ($index['middle_name']['value']) $html .= $index['middle_name']['value'] . ' ';
+		$html .= $index['last_name']['value'] . '<br/>';
 		$html .= '</div>';
 		$html .= '<div class="uk-width-1-5 uk-width-large-1-10">';
 		$html .= '<i class="uk-icon-home"></i><br/>';
 		$html .= '</div>';
 		$html .= '<div class="uk-width-4-5 uk-width-large-9-10">';
-		$html .= $index['address_1']['value'].' ';
-		$html .= $index['address_2']['value'].'<br/>';
-		$html .= $index['city']['value'].'<br/>';
-		$html .= $index['country']['value'].'<br/>';
+		$html .= $index['address_1']['value'] . ' ';
+		$html .= $index['address_2']['value'] . '<br/>';
+		$html .= $index['city']['value'] . '<br/>';
+		$html .= $index['country']['value'] . '<br/>';
 		$html .= '</div>';
 		$html .= '</div>';
 		return $html;
 	}
 
-	public static function formatPostcode($postcodeRaw) {
+	/**
+	 * @param $postcodeRaw
+	 * @return array
+	 */
+	public static function formatPostcode ($postcodeRaw) {
 		$regEx = '/^(?P<num>[0-9]{4}).?(?P<alph>[a-z|A-Z]{2})?$/';
 		$postcodeArr = array();
-		if (preg_match($regEx,trim($postcodeRaw),$match)) {
-			$postcodeArr['format'] = $match['num'].' '.strtoupper($match['alph']);
+		if (preg_match($regEx, trim($postcodeRaw), $match)) {
+			$postcodeArr['format'] = $match['num'] . ' ' . strtoupper($match['alph']);
 			$postcodeArr['num'] = $match['num'];
 			$postcodeArr['alph'] = strtoupper($match['alph']);
 			$postcodeArr['raw'] = $postcodeRaw;
@@ -116,7 +139,10 @@ class plgSystemBixsystem extends JPlugin {
 	}
 
 	/*Events*/
-	public function onAfterInitialise() {
+	/**
+	 * @return bool
+	 */
+	public function onAfterInitialise () {
 		$app = JFactory::getApplication();
 		if ($app->isSite()) {
 			$template = $app->getTemplate();
@@ -126,7 +152,10 @@ class plgSystemBixsystem extends JPlugin {
 		}
 		return true;
 	}
-	
+
+	/**
+	 * @return bool
+	 */
 	public function onAfterDispatch () {
 		$app = JFactory::getApplication();
 		if ($app->isAdmin()) {
@@ -134,23 +163,28 @@ class plgSystemBixsystem extends JPlugin {
 		}
 		$option = JRequest::getCmd('option');
 		$view = JRequest::getCmd('view');
-		if ($option == 'com_users' && (in_array($view,array('registration','profile')))) {
+		if ($option == 'com_users' && (in_array($view, array('registration', 'profile')))) {
 			$app = JFactory::getApplication();
-			$link = JRoute::_('index.php?Itemid='.$this->params->get('profileItemid'));
+			$link = JRoute::_('index.php?Itemid=' . $this->params->get('profileItemid'));
 			$app->redirect($link);
 		}
 
-	// JFactory::getApplication()->enqueueMessage('Postcode niet binnen verzorgingsgebied','success');
-	// JFactory::getApplication()->enqueueMessage('Postcode niet binnen verzorgingsgebied','warning');
-	// JFactory::getApplication()->enqueueMessage('Postcode niet binnen verzorgingsgebied','error');
-	// JFactory::getApplication()->enqueueMessage('Postcode niet binnen verzorgingsgebied','error');
-	// JFactory::getApplication()->enqueueMessage('Postcode niet binnen verzorgingsgebied','info');
-
+		// JFactory::getApplication()->enqueueMessage('Postcode niet binnen verzorgingsgebied','success');
+		// JFactory::getApplication()->enqueueMessage('Postcode niet binnen verzorgingsgebied','warning');
+		// JFactory::getApplication()->enqueueMessage('Postcode niet binnen verzorgingsgebied','error');
+		// JFactory::getApplication()->enqueueMessage('Postcode niet binnen verzorgingsgebied','error');
+		// JFactory::getApplication()->enqueueMessage('Postcode niet binnen verzorgingsgebied','info');
+		return true;
 	}
 
-	function onNewVMuser($userModel, $newId) {
+	/**
+	 * @param $userModel
+	 * @param $newId
+	 * @return bool
+	 */
+	function onNewVMuser ($userModel, $newId) {
 		if ($newId) {
-			if (!$this->params->get('allowedGroup',0)) {
+			if (!$this->params->get('allowedGroup', 0)) {
 				$this->_subject->setError('Stel usergroup in!');
 				return false;
 			}
@@ -164,18 +198,18 @@ class plgSystemBixsystem extends JPlugin {
 			if ($factuurAdres) {
 				$postcode = $factuurAdres->zip;
 				if ($this->validPostcode($postcode)) {
-					if (!in_array($this->params->get('allowedGroup'),$vmUser->shopper_groups)) {
-						$shoppergroupData = array('virtuemart_user_id'=>$newId,'virtuemart_shoppergroup_id'=>$this->params->get('allowedGroup'));
-						$paths = JTable::addIncludePath(JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_virtuemart'.DS.'tables');
+					if (!in_array($this->params->get('allowedGroup'), $vmUser->shopper_groups)) {
+						$shoppergroupData = array('virtuemart_user_id' => $newId, 'virtuemart_shoppergroup_id' => $this->params->get('allowedGroup'));
+						JTable::addIncludePath(JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_virtuemart' . DS . 'tables');
 						$user_shoppergroups_table = JTable::getInstance('vmuser_shoppergroups', 'Table', array());
-						$shoppergroupData = $user_shoppergroups_table->bindChecknStore($shoppergroupData);
+						$user_shoppergroups_table->bindChecknStore($shoppergroupData);
 						$errors = $user_shoppergroups_table->getErrors();
-						foreach($errors as $error){
+						foreach ($errors as $error) {
 							$this->setError($error);
-							$this->_subject->setError('Set shoppergroup '.$error);
+							$this->_subject->setError('Set shoppergroup ' . $error);
 							return false;
 						}
-					} 
+					}
 				} else {
 					$this->_subject->setError('Adres valt niet binnen verzorgingsgebied!');
 					return false;
@@ -184,19 +218,23 @@ class plgSystemBixsystem extends JPlugin {
 				$this->_subject->setError('Geen factuuradres!');
 				return false;
 			}
-				// echo '<pre>'.$newId;
-				// print_r($user_shoppergroups_table);
-				// echo '</pre>';
+			// echo '<pre>'.$newId;
+			// print_r($user_shoppergroups_table);
+			// echo '</pre>';
 			// echo $this['sdg'];
 		}
 		return true;
 	}
 	// index.php?option=com_virtuemart&controller=plugin&task=display&type=vmcustom&name=bixsystem
-	public function plgVmOnSelfCallFE($type, $name, &$render) {
+	/**
+	 * @param $type
+	 * @param $name
+	 */
+	public function plgVmOnSelfCallFE ($type, $name) {
 		JPlugin::loadLanguage('plg_system_bixsystem');
 		if ($type != 'vmcustom' || $name != 'bixsystem') jExit();
 		$data = JRequest::get('GET');
-		$return = array('valid'=>false,'message'=>'','info'=>array());
+		$return = array('valid' => false, 'message' => '', 'info' => array());
 		//format postcode
 		$postcodeArr = self::formatPostcode($data['postcode']);
 		if (!empty($data['validateFormat']) && !empty($postcodeArr['valid']) || empty($postcodeArr['num'])) { //invalid postcode 
@@ -206,9 +244,9 @@ class plgSystemBixsystem extends JPlugin {
 		}
 		if (!empty($data['huisnummer'])) {
 			//validatie postcode.nl
-			require_once(dirname(__FILE__).DS.'helpers/postcodenl_api.php');
+			require_once(dirname(__FILE__) . DS . 'helpers/postcodenl_api.php');
 			$helper = new PostcodeNl_Api_Helper_Data($this->params);
-			$return['info'] = $helper->lookupAddress($postcodeArr['num'].$postcodeArr['alph'], $data['huisnummer'], @$data['huisnummer_toevoeging']);
+			$return['info'] = $helper->lookupAddress($postcodeArr['num'] . $postcodeArr['alph'], $data['huisnummer'], @$data['huisnummer_toevoeging']);
 			if (!isset($return['info']['street'])) {
 				$return['message'] = $return['info']['message'];
 				echo json_encode($return);
@@ -225,59 +263,68 @@ class plgSystemBixsystem extends JPlugin {
 // print_r($return);
 // echo '</pre>';
 		//data in sessie
-		JFactory::getApplication()->setUserState('plugin.system.bixsystem.postcodechecked',$data['postcode']);
+		JFactory::getApplication()->setUserState('plugin.system.bixsystem.postcodechecked', $data['postcode']);
 		echo json_encode($return);
 		jExit();
 	}
 
-	public function plgVmOnUserStore(&$data) {
+	/**
+	 * @param $data
+	 * @return bool
+	 */
+	public function plgVmOnUserStore (&$data) {
 		if ($this->validPostcode($data['zip'])) {
-			if (!in_array($this->params->get('allowedGroup',0),$data['virtuemart_shoppergroup_id'])) {
-				$data['virtuemart_shoppergroup_id'][] = $this->params->get('allowedGroup',0);
+			if (!in_array($this->params->get('allowedGroup', 0), $data['virtuemart_shoppergroup_id'])) {
+				$data['virtuemart_shoppergroup_id'][] = $this->params->get('allowedGroup', 0);
 			}
 		} else {
-			if (in_array($this->params->get('allowedGroup',0),$data['virtuemart_shoppergroup_id'])) {
-				JFactory::getApplication()->enqueueMessage('Postcode niet binnen verzorgingsgebied','warning');
+			if (in_array($this->params->get('allowedGroup', 0), $data['virtuemart_shoppergroup_id'])) {
+				JFactory::getApplication()->enqueueMessage('Postcode niet binnen verzorgingsgebied', 'warning');
 				$data['virtuemart_shoppergroup_id'] = array(); //leeg is ook default bij vm
 			}
 		}
 // echo $this['sdg'];
 		return true;
 	}
-/*
-{
-	"reeksen" : [{
-			"van" : 7400,
-			"tot" : 7699
-		}, {
-			"van" : 8000,
-			"tot" : 8049
-		}
-	],
-	"losgebied" : [
-		7712,7713
-	],
-	"losPc" : [
-		"1012AB","1013AB"
-	],
-	"exceptgebied" : [
-		7511,7575
-	],
-	"exceptPc" : [
-		"7400AB","7680AB"
-	]
-}//*/
-	private function validPostcode($postcode) {
-		$postcodeGebieden = json_decode(file_get_contents(dirname(__FILE__).'/postcodegebieden.json'));
+	/*
+	{
+		"reeksen" : [{
+				"van" : 7400,
+				"tot" : 7699
+			}, {
+				"van" : 8000,
+				"tot" : 8049
+			}
+		],
+		"losgebied" : [
+			7712,7713
+		],
+		"losPc" : [
+			"1012AB","1013AB"
+		],
+		"exceptgebied" : [
+			7511,7575
+		],
+		"exceptPc" : [
+			"7400AB","7680AB"
+		]
+	}//*/
+	/**
+	 * @param $postcode
+	 * @return bool
+	 */
+	private function validPostcode ($postcode) {
+		$postcodeGebieden = json_decode(file_get_contents(dirname(__FILE__) . '/postcodegebieden.json'));
 		$postcodeArr = self::formatPostcode($postcode);
 		if (empty($postcodeArr['num'])) return false;
-	// echo '<pre>';
-	// print_r($postcodeArr);
-	// print_r($postcodeGebieden->losPc);
-	// echo '</pre>';
+		// echo '<pre>';
+		// print_r($postcodeArr);
+		// print_r($postcodeGebieden->losPc);
+		// echo '</pre>';
 		// uitzonderingen altijd goed
-		if (in_array($postcodeArr['num'],$postcodeGebieden->losgebied) || ($postcodeArr['valid'] 
-				&& in_array($postcodeArr['num'].$postcodeArr['alph'],$postcodeGebieden->losPc))) { 
+		if (in_array($postcodeArr['num'], $postcodeGebieden->losgebied) || ($postcodeArr['valid']
+				&& in_array($postcodeArr['num'] . $postcodeArr['alph'], $postcodeGebieden->losPc))
+		) {
 			return true;
 		}
 		//in reeksen?
@@ -288,11 +335,12 @@ class plgSystemBixsystem extends JPlugin {
 			}
 		}
 		//of toch uitzondering?
-		if (in_array($postcodeArr['num'],$postcodeGebieden->exceptgebied) || ($postcodeArr['valid'] 
-				&& in_array($postcodeArr['num'].$postcodeArr['alph'],$postcodeGebieden->exceptPc))) { 
+		if (in_array($postcodeArr['num'], $postcodeGebieden->exceptgebied) || ($postcodeArr['valid']
+				&& in_array($postcodeArr['num'] . $postcodeArr['alph'], $postcodeGebieden->exceptPc))
+		) {
 			$valid = false;
 		}
 		return $valid;
 	}
-	
+
 }
