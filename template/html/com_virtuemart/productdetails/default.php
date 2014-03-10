@@ -335,9 +335,8 @@ $MailLink = 'index.php?option=com_virtuemart&view=productdetails&task=recommend&
 	// Product Description
 	if (!empty($this->product->product_desc)) {
 	    ?>
-        <div class="product-description">
-	<?php /** @todo Test if content plugins modify the product description */ ?>
-    	<span class="title"><?php echo JText::_('COM_VIRTUEMART_PRODUCT_DESC_TITLE') ?></span>
+		<div class="uk-panel uk-panel-box uk-margin-top">
+		<?php /** @todo Test if content plugins modify the product description */ ?>
 	<?php echo $this->product->product_desc; ?>
         </div>
 	<?php
