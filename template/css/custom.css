@@ -1,5 +1,5 @@
 .category-list img {
-	border-radius: 0px;
+	border-radius: 0;
 	border: 1px solid #203986;
 	margin-top: 8px;
 }
@@ -23,8 +23,8 @@
 
 .uk-button-cart:hover, .uk-button-cart:focus {
 	background-color: #1c3684;
-	background-image: -webkit-linear-gradient(top, #495fa2, #1c3684);
-	background-image: linear-gradient(to bottom, #495fa2, #1c3684);
+	background: -webkit-linear-gradient(top, #495fa2, #1c3684);
+	background: linear-gradient(to bottom, #495fa2, #1c3684);
 	color: #ffffff;
 }
 
@@ -59,4 +59,20 @@
 
 .uk-panel-box-gray {
 	background-color: #eaeaea;
+}
+
+/* Prijzen */
+.PricesalesPrice span, .PricepriceWithoutTax span, .PricediscountAmount span, .PricetaxAmount span {
+	float: right;
+}
+#lightbox-outer {
+    background: #fff;
+}
+
+#lightbox-content {
+    border: 0px solid #fff;
+}
+
+.ask-a-question-view, .manufacturer-details-view {
+    padding: 15px;
 }

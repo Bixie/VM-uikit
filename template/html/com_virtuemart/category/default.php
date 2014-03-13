@@ -111,15 +111,15 @@ if (VmConfig::get ('showCategory', 1) and empty($this->keyword)) {
 	if (!empty($this->products)) {
 		?>
 	<div class="uk-grid">
-		<div class="uk-width-4-10">
+		<div class="uk-width-1-2">
 			<?php echo $this->orderByList['orderby']; ?>
 			<?php echo $this->orderByList['manufacturer']; ?>
 		</div>
-		<div class="uk-width-6-10">
+		<div class="uk-width-1-2">
 			<div class="uk-form">
 				<div class="uk-float-left">
-					<?php echo $this->vmPagination->getResultsCounter ();?>&nbsp; 
-					<em><?php echo $this->vmPagination->getPagesCounter (); ?></em>
+					<?php echo $this->vmPagination->getResultsCounter ();?><br />
+					<?php echo $this->vmPagination->getPagesCounter (); ?>
 				</div>
 				<div class="uk-float-right uk-margin-left">
 					<?php echo $this->vmPagination->getLimitBox ($this->category->limit_list_step); ?>
@@ -216,7 +216,7 @@ if (VmConfig::get ('showCategory', 1) and empty($this->keyword)) {
 									
 								</div>
 								<div class="uk-width-1-2">
-									<div class="product-price" id="productPrice<?php echo $product->virtuemart_product_id ?>">
+									<div class="product-price" id="<?php printf('productPrice%d',$product->virtuemart_product_id); ?>">
 										<?php
 										if ($this->show_prices == '1') {
 											if ($product->prices['salesPrice']<=0 and VmConfig::get ('askprice', 1) and  !$product->images[0]->file_is_downloadable) {
