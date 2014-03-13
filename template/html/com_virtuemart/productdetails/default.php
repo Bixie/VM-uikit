@@ -138,17 +138,17 @@ $MailLink = 'index.php?option=com_virtuemart&view=productdetails&task=recommend&
     } // Product Custom ontop end
     ?>
 
-    <div class="uk-grid" data-uk-grid-match="{target:'.uk-panel'}">
+	<div class="uk-grid" data-uk-grid-match="{target:'.uk-inner'}">
 		<div class="uk-width-medium-1-2">
-			<div class="uk-panel uk-panel-box uk-panel-box-gray">
-	<?php
+			<div class="uk-panel uk-inner uk-panel-box uk-panel-box-gray">
+			<?php
 	echo $this->loadTemplate('images');
 	?>
 			</div>
 		</div>
 
 		<div class="uk-width-medium-1-2">
-			<div class="uk-panel uk-panel-box">
+			<div class="uk-panel uk-inner uk-panel-box">
 
 			<?php
 			// Product Short Description
