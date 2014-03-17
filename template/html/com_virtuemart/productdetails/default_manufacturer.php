@@ -54,6 +54,6 @@ if (strtolower(JRequest::getWord('output')) == "pdf") {
 
 	<button id="manuf-link" class="uk-button uk-button-small uk-margin-small-top"
 			type="button">
-		<i class="uk-icon-info"></i>&nbsp;&nbsp;<?php echo $text ?>
+		<i class="uk-icon-info uk-margin-small-right"></i><?php echo $text ?>
 	</button><br/>
-<?php } ?>
+<?php }
