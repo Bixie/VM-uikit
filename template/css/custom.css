@@ -76,3 +76,7 @@
 .ask-a-question-view, .manufacturer-details-view {
     padding: 15px;
 }
+
+.tm-footer a:hover {
+    color: #2D4899;
+}
