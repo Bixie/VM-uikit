@@ -85,3 +85,13 @@
 .uk-text-primary {
     color: #7bba65;
 }
+
+/* Offcanvas */
+.uk-nav-offcanvas > .uk-open > a, html:not(.uk-touch) .uk-nav-offcanvas > li > a:hover, html:not(.uk-touch) .uk-nav-offcanvas > li > a:focus {
+    color: #7bba65;
+}
+
+/* Box Primary links */
+.uk-panel-box-primary a {
+    color: #1c3684;
+}
