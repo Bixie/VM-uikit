@@ -29,8 +29,8 @@ defined('_JEXEC') or die('Restricted access');
 
 <table class="html-email" width="100%" cellspacing="0" cellpadding="1" border="0">
 	<tr align="left" class="sectiontableheader">
-		<td align="left" width="7%"><strong>SKU</strong></td>
-		<td align="left" colspan="2" width="36%" ><strong><?php echo JText::_('COM_VIRTUEMART_PRODUCT_NAME_TITLE') ?></strong></td>
+		<td align="left" width="10%"><strong>SKU</strong></td>
+		<td align="left" colspan="2" width="33%" ><strong><?php echo JText::_('COM_VIRTUEMART_PRODUCT_NAME_TITLE') ?></strong></td>
 		<td align="center" width="10%"><strong>Status</strong></td>
 		<td align="right" width="10%" ><strong><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_PRICE') ?></strong></td>
 		<td align="right" width="6%"><strong>Aantal</strong></td>

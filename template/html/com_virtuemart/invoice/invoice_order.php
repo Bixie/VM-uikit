@@ -108,14 +108,11 @@ defined('_JEXEC') or die('Restricted access');
     </tr>
     <tr>
 		<td class=""><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_SHIPMENT_LBL') ?></td>
-		<td align="left"><?php
-		    echo $this->orderDetails['shipmentName'];
-		    ?></td>
+		<td align="left"><?php echo $this->orderDetails['shipmentName']; ?></td>
     </tr>
     <tr>
 		<td class=""><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_PAYMENT_LBL') ?></td>
-		<td align="left"><?php echo $this->orderDetails['paymentName']; ?>
-		</td>
+		<td align="left"><?php echo $this->orderDetails['paymentName']; ?></td>
     </tr>
 <?php if ($this->orderDetails['details']['BT']->customer_note) { ?>
 	 <tr>
