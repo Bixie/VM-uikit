@@ -1165,7 +1165,6 @@ class plgVmPaymentBuckaroo extends vmPSPlugin {
 
 		$html = '<div class="order">' . "\n";
 		$html .= '<table class="vmorder-done">' . "\n";
-		$html .= $this->getHtmlRow('BUCKAROO_PAYMENT_NAME', $buckarooTable->payment_method, "class='vmorder-done-payinfo'");
 
 		if (!empty($buckarooTable)) {
 			$currency = CurrencyDisplay::getInstance('');
