@@ -29,6 +29,13 @@ $document->addScriptDeclaration('
 				var result = $(this).val();
 					$("#counter").val( result.length );
 			});
+//			$("#askform").submit(function () {
+//				var result = $("#comment").val();
+//				if (result.length < ' . $min . ' || result.length > ' . $max . ') {
+//					$.UIkit.notify({message: "Bericht heeft niet de vereiste lengte", status:"warning"});
+//					return false;
+//				}
+//			});
 	});
 ');
 /* Let's see if we found the product */
@@ -93,7 +100,6 @@ if (empty ($this->product)) {
                             echo $ask_comment;
                             ?>
                         </label>
-
                         <div class="uk-form-controls">
                             <textarea title="<?php echo $ask_comment ?>"
                                                                 class="uk-width-1-1 validate[required,minSize[<?php echo $min ?>],maxSize[<?php echo $max ?>]] field"
