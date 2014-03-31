@@ -71,7 +71,7 @@ class JDocumentRendererMessage extends JDocumentRenderer {
 						$buffer .= "\n\t<li>";
 						$buffer .= "\n\t\t<div class=\"uk-alert uk-alert-" . $ukType . "\" data-type=\"" . $ukType . "\"  data-uk-alert>";
 						$buffer .= "\n\t\t<a href=\"\" class=\"uk-alert-close uk-close\"></a>";
-						$buffer .= "\n\t\t<span class=\"text\"><i class=\"" . @$icons[strtolower($type)] . " uk-margin-left uk-margin-right\"></i>" . $msg . "</span>";
+						$buffer .= "\n\t\t<span class=\"text\"><i class=\"" . @$icons[strtolower($type)] . " uk-margin-left uk-margin-right\"></i>" . strip_tags($msg) . "</span>";
 						$buffer .= "\n\t\t</div>";
 						$buffer .= "\n\t</li>";
 					}
