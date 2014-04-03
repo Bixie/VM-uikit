@@ -14,13 +14,6 @@ defined('_JEXEC') or die;
  */
 class plgSystemBixsystem extends JPlugin {
 
-	/**
-	 * @param       $subject
-	 * @param array $config
-	 */
-	public function plgBixprintshopAdresPostcodefill (&$subject, $config = array()) {
-		parent::__construct($subject, $config);
-	}
 	/*Statics
 	* must be called from within VM!
 	*/

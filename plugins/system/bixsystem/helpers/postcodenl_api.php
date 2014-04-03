@@ -1,4 +1,5 @@
 <?php
+
 /*
 Copyright (c) 2012, Postcode.nl B.V.
 All rights reserved.
@@ -26,12 +27,11 @@ WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
 class PostcodeNl_Api_Helper_Data {
 	const API_TIMEOUT = 3;
 
-	public function __construct($params) {
+	public function __construct ($params) {
 		$this->params = $params;
 	}
-		
-	public function lookupAddress($postcode, $houseNumber, $houseNumberAddition)
-	{
+
+	public function lookupAddress ($postcode, $houseNumber, $houseNumberAddition) {
 		$serviceUrl = trim($this->params->get('api_url'));
 		$serviceKey = trim($this->params->get('api_key'));
 		$serviceSecret = trim($this->params->get('api_secret'));
@@ -39,28 +39,25 @@ class PostcodeNl_Api_Helper_Data {
 		$serviceDebug = false;
 
 
-		if (!$serviceUrl || !$serviceKey || !$serviceSecret)
-		{
+		if (!$serviceUrl || !$serviceKey || !$serviceSecret) {
 			return array('message' => JText::_('PLG_SYSTEM_BIXSYSTEM_NOT_CONFIGURED'));
 		}
 
 		// Check for SSL support in CURL, if connecting to `https`
-		if (substr($serviceUrl, 0, 8) == 'https://')
-		{
+		if (substr($serviceUrl, 0, 8) == 'https://') {
 			$curlVersion = curl_version();
-			if (!($curlVersion['features'] & CURL_VERSION_SSL))
-			{
+			if (!($curlVersion['features'] & CURL_VERSION_SSL)) {
 				return array('message' => 'Cannot connect to Postcode.nl API: Server is missing SSL (https) support for CURL.');
 			}
 		}
 
-		$url = $serviceUrl . '/rest/addresses/' . urlencode($postcode). '/'. urlencode($houseNumber) . '/'. urlencode($houseNumberAddition);
+		$url = $serviceUrl . '/rest/addresses/' . urlencode($postcode) . '/' . urlencode($houseNumber) . '/' . urlencode($houseNumberAddition);
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, self::API_TIMEOUT);
 		curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-		curl_setopt($ch, CURLOPT_USERPWD, $serviceKey .':'. $serviceSecret);
+		curl_setopt($ch, CURLOPT_USERPWD, $serviceKey . ':' . $serviceSecret);
 		curl_setopt($ch, CURLOPT_USERAGENT, 'BixiePrintshopPostcodenl_plugin');
 		$jsonResponse = curl_exec($ch);
 		$curlError = curl_error($ch);
@@ -72,8 +69,7 @@ class PostcodeNl_Api_Helper_Data {
 		if ($serviceShowcase)
 			$sendResponse['showcaseResponse'] = $response;
 
-		if ($serviceDebug)
-		{
+		if ($serviceDebug) {
 
 			$sendResponse['debugInfo'] = array(
 				'requestUrl' => $url,
@@ -83,17 +79,15 @@ class PostcodeNl_Api_Helper_Data {
 				'configuration' => array(
 					'url' => $serviceUrl,
 					'key' => $serviceKey,
-					'secret' => substr($serviceSecret, 0, 6) .'[hidden]',
+					'secret' => substr($serviceSecret, 0, 6) . '[hidden]',
 					'showcase' => $serviceShowcase,
 					'debug' => $serviceDebug,
 				)
 			);
 		}
 
-		if (is_array($response) && isset($response['exceptionId']))
-		{
-			switch ($response['exceptionId'])
-			{
+		if (is_array($response) && isset($response['exceptionId'])) {
+			switch ($response['exceptionId']) {
 				case 'PostcodeNl_Controller_Address_InvalidPostcodeException':
 					$sendResponse['message'] = JText::_('PLG_SYSTEM_BIXSYSTEM_PC_INVALID');
 					$sendResponse['messageTarget'] = 'postcode';
@@ -107,13 +101,9 @@ class PostcodeNl_Api_Helper_Data {
 					$sendResponse['messageTarget'] = 'huisnummer';
 					break;
 			}
-		}
-		else if (is_array($response) && isset($response['postcode']))
-		{
+		} else if (is_array($response) && isset($response['postcode'])) {
 			$sendResponse = array_merge($sendResponse, $response);
-		}
-		else
-		{
+		} else {
 			$sendResponse['message'] = JText::_('PLG_SYSTEM_BIXSYSTEM_POSTCODEFILL_NOT_AVAIL');
 			$sendResponse['messageTarget'] = 'huisnummer';
 		}
